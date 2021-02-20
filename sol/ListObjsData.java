@@ -19,15 +19,29 @@ public class ListObjsData<T extends IAttributeDatum>
         this.table = rows;
     }
 
+    public IAttributeDatum getRow(int index){
+        IAttributeDatum current = this.first;
+        for (int i =0; i < this.size(); i++){
+            if (i == index){
+                return current;
+            }
+            else {
+                current = current.next;
+            }
+        }
+    }
 
-    String gender;
-    boolean leadershipExperience;
-    String lastPositionDuration;
-    String numWorkExperiences;
-    String programmingLanguages;
-    String gpa;
-    String location;
-    boolean hired;
+    public LinkedList<Object> getColumn(String attribute){
+        LinkedList<Object> column = new LinkedList<>();
+        IAttributeDatum current = this.first;
+        while(current != null){
+            if(column.getValueOf(attribute)){
+                column.add(column.getValueof(attribute));
+                current = current.next;
+            }
+            else if (//if it's not an attribute within IAttributeDatum){}
+        }
+    }
 
     @Override
     public LinkedList<String> getAttributes() {
