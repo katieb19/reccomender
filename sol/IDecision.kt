@@ -1,0 +1,5 @@
+package sol
+
+interface IDecision {
+
+}

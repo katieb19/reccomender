@@ -13,6 +13,13 @@ import java.util.LinkedList;
 public class ListObjsData<T extends IAttributeDatum>
         implements IAttributeDataset<T> {
 
+    public LinkedList<IAttributeDatum> table; // list of rows
+
+    public ListObjsData(LinkedList<IAttributeDatum> table){
+        this.table = table;
+    }
+
+
     @Override
     public LinkedList<String> getAttributes() {
         // TODO: Implement.
