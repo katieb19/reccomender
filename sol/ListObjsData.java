@@ -15,13 +15,26 @@ public class ListObjsData<T extends IAttributeDatum>
 
     public LinkedList<IAttributeDatum> table; // list of rows
 
-    public ListObjsData(LinkedList<IAttributeDatum> table){
-        this.table = table;
+    public ListObjsData(LinkedList<IAttributeDatum> rows){
+        this.table = rows;
     }
 
 
+    String gender;
+    boolean leadershipExperience;
+    String lastPositionDuration;
+    String numWorkExperiences;
+    String programmingLanguages;
+    String gpa;
+    String location;
+    boolean hired;
+
     @Override
     public LinkedList<String> getAttributes() {
+        LinkedList<Object> attribute = new LinkedList<>();
+        for (int i = 0; i < this.size(); i++){
+
+        }
         // TODO: Implement.
         return null;
     }
@@ -34,7 +47,12 @@ public class ListObjsData<T extends IAttributeDatum>
 
     @Override
     public int size() {
-        // TODO: Implement.
+        IAttribute Datum person = this.;
+        int size = 0;
+        while (person.next != null){
+            size = size + 1;
+
+        }
         return 0;
     }
 
