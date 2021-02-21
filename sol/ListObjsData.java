@@ -4,6 +4,7 @@ import src.IAttributeDataset;
 import src.IAttributeDatum;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /*
  * Class for a specific representation of rows in a data table. This uses a list
@@ -13,11 +14,11 @@ import java.util.LinkedList;
 public class ListObjsData<T extends IAttributeDatum>
         implements IAttributeDataset<T> {
 
-    public LinkedList<T> table; // list of rows
+    public LinkedList<T> rows; // list of rows
     public LinkedList<String> attribute;
 
     public ListObjsData(LinkedList<T> rows, LinkedList<String> attribute){
-        this.table = rows;
+        this.rows = rows;
         this.attribute = attribute;
     }
     // data.table.get(1)
@@ -59,11 +60,18 @@ public class ListObjsData<T extends IAttributeDatum>
     public LinkedList<IAttributeDataset<T>> partition(String onAttribute) {
         // output a linked list w new tables, one of which has rows w green; one has rows with orange
         // TOOD: Implement.
+
+        //helper method that creates a list of the unique values and use
+        //within for loop with list of unique attributes to grab objects
+
         LinkedList<IAttributeDataset<T>> result = new LinkedList<>();
         Object values = this.table.get(0).getValueOf(onAttribute);
 
         if (this.allSameValue(onAttribute)){
-            return result.addFirst(this.table);
+            this.attribute.remove(onAttribute);
+            ListObjsData<T> newList = new ListObjsData<T> (this.rows, this.attribute);
+            result.addFirst(newList);
+            return result;
         } else{
             for(T obj: this.table) {
                 if (obj.getValueOf(onAttribute).equals(values)){
