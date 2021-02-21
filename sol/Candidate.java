@@ -3,8 +3,6 @@ package sol;
 
 import src.IAttributeDatum;
 
-import java.util.Objects;
-
 public class Candidate implements IAttributeDatum {
   String gender;
   boolean leadershipExperience;

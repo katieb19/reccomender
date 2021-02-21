@@ -13,77 +13,63 @@ import java.util.LinkedList;
 public class ListObjsData<T extends IAttributeDatum>
         implements IAttributeDataset<T> {
 
-    public LinkedList<IAttributeDatum> table; // list of rows
+    public LinkedList<T> table; // list of rows
+    public LinkedList<String> attribute;
 
-    public ListObjsData(LinkedList<IAttributeDatum> rows){
+    public ListObjsData(LinkedList<T> rows, LinkedList<String> attribute){
         this.table = rows;
+        this.attribute = attribute;
     }
-
-    public IAttributeDatum getRow(int index){
-        IAttributeDatum current = this.first;
-        for (int i =0; i < this.size(); i++){
-            if (i == index){
-                return current;
-            }
-            else {
-                current = current.next;
-            }
-        }
-    }
+    // data.table.get(1)
 
     public LinkedList<Object> getColumn(String attribute){
         LinkedList<Object> column = new LinkedList<>();
-        IAttributeDatum current = this.first;
-        while(current != null){
-            if(column.getValueOf(attribute)){
-                column.add(column.getValueof(attribute));
-                current = current.next;
-            }
-            else if (//if it's not an attribute within IAttributeDatum){}
+        for(T item: this.table) {
+            column.add(item.getValueOf(attribute));
         }
+        return column;
     }
+
+    //distinct function
 
     @Override
     public LinkedList<String> getAttributes() {
-        LinkedList<Object> attribute = new LinkedList<>();
-        for (int i = 0; i < this.size(); i++){
-
-        }
-        // TODO: Implement.
-        return null;
+        return this.attribute;
     }
 
     @Override
     public boolean allSameValue(String ofAttribute) {
-        // TODO: Implement.
-        return false;
+        Object item = (this.table.get(0)).getValueOf(ofAttribute);
+        for(T obj: this.table) {
+            if (obj.getValueOf(ofAttribute) != item){
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public int size() {
-        IAttribute Datum person = this.;
-        int size = 0;
-        while (person.next != null){
-            size = size + 1;
-
-        }
-        return 0;
+        return this.table.size();
     }
 
     @Override
     public LinkedList<IAttributeDataset<T>> partition(String onAttribute) {
-        // TODO: Implement.
+        // output a linked list w new tables, one of which has rows w green; one has rows with orange
+        // TOOD: Implement.
         return null;
     }
 
     @Override
     public Object getSharedValue(String ofAttribute) {
+        //assume that values in a column are the same, what is that value
         // TODO: Implement.
         return null;
     }
 
     @Override
     public Object mostCommonValue(String ofAttribute) {
+        //return most common value in a column
         // TODO: Implement.
         return null;
     }

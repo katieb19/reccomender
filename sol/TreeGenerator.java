@@ -5,9 +5,6 @@ import src.IAttributeDatum;
 import src.IGenerator;
 import src.INode;
 
-import java.util.LinkedList;
-import java.util.Random;
-
 /*
  * Class for creating and interacting with a decision tree given a dataset.
  *
