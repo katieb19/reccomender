@@ -53,24 +53,51 @@ public class ListObjsData<T extends IAttributeDatum>
         return this.table.size();
     }
 
+
+
     @Override
     public LinkedList<IAttributeDataset<T>> partition(String onAttribute) {
         // output a linked list w new tables, one of which has rows w green; one has rows with orange
         // TOOD: Implement.
-        return null;
+        LinkedList<IAttributeDataset<T>> result = new LinkedList<>();
+        Object values = this.table.get(0).getValueOf(onAttribute);
+
+        if (this.allSameValue(onAttribute)){
+            return result.addFirst(this.table);
+        } else{
+            for(T obj: this.table) {
+                if (obj.getValueOf(onAttribute).equals(values)){
+                    LinkedList<Object> newList = new LinkedList<>();
+                    newList.add(obj);
+                    result.add(newList);
+                    //return newList;
+                } else {
+                    values = obj.getValueOf(onAttribute);
+                    LinkedList<Object> newList2 = new LinkedList<>();
+                    newList2.add(obj);
+                    result.add(newList2);
+                }
+            }
+            return result;
+        }
     }
 
     @Override
     public Object getSharedValue(String ofAttribute) {
-        //assume that values in a column are the same, what is that value
-        // TODO: Implement.
+        if (this.allSameValue(ofAttribute)){
+            return this.table.get(0).getValueOf(ofAttribute);
+        }
         return null;
     }
 
     @Override
     public Object mostCommonValue(String ofAttribute) {
-        //return most common value in a column
-        // TODO: Implement.
-        return null;
+        IAttributeDataset<T> longest = this.partition(ofAttribute).get(0);
+        for (IAttributeDataset<T> obj: this.partition(ofAttribute)){
+            if (longest.size() < obj.size()){
+                longest = obj;
+            }
+        }
+        return longest.table.get(0).getValueOf(ofAttribute);
     }
 }
