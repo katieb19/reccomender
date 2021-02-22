@@ -25,7 +25,7 @@ public class ListObjsData<T extends IAttributeDatum>
 
     public LinkedList<Object> getColumn(String attribute){
         LinkedList<Object> column = new LinkedList<>();
-        for(T item: this.table) {
+        for(T item: this.rows) {
             column.add(item.getValueOf(attribute));
         }
         return column;
@@ -40,8 +40,8 @@ public class ListObjsData<T extends IAttributeDatum>
 
     @Override
     public boolean allSameValue(String ofAttribute) {
-        Object item = (this.table.get(0)).getValueOf(ofAttribute);
-        for(T obj: this.table) {
+        Object item = (this.rows.get(0)).getValueOf(ofAttribute);
+        for(T obj: this.rows) {
             if (obj.getValueOf(ofAttribute) != item){
                 return false;
             }
@@ -51,7 +51,7 @@ public class ListObjsData<T extends IAttributeDatum>
 
     @Override
     public int size() {
-        return this.table.size();
+        return this.rows.size();
     }
 
 
@@ -59,13 +59,12 @@ public class ListObjsData<T extends IAttributeDatum>
     @Override
     public LinkedList<IAttributeDataset<T>> partition(String onAttribute) {
         // output a linked list w new tables, one of which has rows w green; one has rows with orange
-        // TOOD: Implement.
 
         //helper method that creates a list of the unique values and use
         //within for loop with list of unique attributes to grab objects
 
         LinkedList<IAttributeDataset<T>> result = new LinkedList<>();
-        Object values = this.table.get(0).getValueOf(onAttribute);
+        Object values = this.rows.get(0).getValueOf(onAttribute);
 
         if (this.allSameValue(onAttribute)){
             this.attribute.remove(onAttribute);
@@ -73,7 +72,7 @@ public class ListObjsData<T extends IAttributeDatum>
             result.addFirst(newList);
             return result;
         } else{
-            for(T obj: this.table) {
+            for(T obj: this.rows) {
                 if (obj.getValueOf(onAttribute).equals(values)){
                     LinkedList<Object> newList = new LinkedList<>();
                     newList.add(obj);
@@ -93,7 +92,7 @@ public class ListObjsData<T extends IAttributeDatum>
     @Override
     public Object getSharedValue(String ofAttribute) {
         if (this.allSameValue(ofAttribute)){
-            return this.table.get(0).getValueOf(ofAttribute);
+            return this.rows.get(0).getValueOf(ofAttribute);
         }
         return null;
     }
@@ -106,6 +105,6 @@ public class ListObjsData<T extends IAttributeDatum>
                 longest = obj;
             }
         }
-        return longest.table.get(0).getValueOf(ofAttribute);
+        return longest.rows.get(0).getValueOf(ofAttribute);
     }
 }
