@@ -42,6 +42,7 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         //Create Edges
         for (IAttributeDataset<T> innerList: partitionedData){
             LinkedList<IAttributeDataset<T>> distinct = new LinkedList<>();
+            //maybe ListObjsData
             distinct.add(innerList);
             for (Object obj: distinct) {
                 if (!distinct.contains(obj)){
