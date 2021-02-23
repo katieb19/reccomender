@@ -55,6 +55,27 @@ public class ListObjsData<T extends IAttributeDatum>
     }
 
 
+    public LinkedList<T> distinct(LinkedList<T> items){
+        LinkedList<T> distinct = new LinkedList<>();
+        for (T obj: items){
+            if (!distinct.contains(obj)){
+                distinct.add(obj);
+            }
+        }
+        return distinct;
+    }
+
+
+    public LinkedList<String> removeAtt(String attribute) {
+        LinkedList<String> newList = this.attribute;
+        for (String str : newList) {
+            if (str.equals(attribute)) {
+                newList.remove(attribute);
+            }
+        }
+        return newList;
+    }
+
 
     @Override
     public LinkedList<IAttributeDataset<T>> partition(String onAttribute) {
@@ -63,30 +84,26 @@ public class ListObjsData<T extends IAttributeDatum>
         //helper method that creates a list of the unique values and use
         //within for loop with list of unique attributes to grab objects
 
+        //WRITE REMOVE FUNCTION that returns new list
         LinkedList<IAttributeDataset<T>> result = new LinkedList<>();
-        Object values = this.rows.get(0).getValueOf(onAttribute);
+        LinkedList<String> attList = this.removeAtt(onAttribute);
 
         if (this.allSameValue(onAttribute)){
-            this.attribute.remove(onAttribute);
             ListObjsData<T> newList = new ListObjsData<T> (this.rows, this.attribute);
             result.addFirst(newList);
-            return result;
         } else{
-            for(T obj: this.rows) {
-                if (obj.getValueOf(onAttribute).equals(values)){
-                    LinkedList<Object> newList = new LinkedList<>();
-                    newList.add(obj);
-                    result.add(newList);
-                    //return newList;
-                } else {
-                    values = obj.getValueOf(onAttribute);
-                    LinkedList<Object> newList2 = new LinkedList<>();
-                    newList2.add(obj);
-                    result.add(newList2);
+            for(T obj: distinct(this.rows)) {
+                LinkedList<T> newList = new LinkedList<>();
+                for (T row: this.rows) {
+                    if (obj.equals(row.getValueOf(onAttribute))) {
+                        newList.add(obj);
+                    }
                 }
+                ListObjsData<T> finalList = new ListObjsData<T>(newList, attList);
+                result.add(finalList);
             }
-            return result;
         }
+        return result;
     }
 
     @Override
