@@ -7,6 +7,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 /*
+for tree generator, need private fields one to represent the tree (Inode class)
+because we don't want tree to be altered outside of the class
+make dataset private
+
+how to create edges (partition) and then figuring out the next nodes
+ */
+/*
  * Class for a specific representation of rows in a data table. This uses a list
  * of objects (one object per row).
  * The type T is the object that forms the "rows" of the data table
