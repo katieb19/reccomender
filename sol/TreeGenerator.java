@@ -34,28 +34,24 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         //Creating first node with attribute
         Node firstNode = new Node();
         firstNode.attribute = targetAttr;
-        firstNode.edges = null;
+        firstNode.edges = new LinkedList<>();
 
         //Partition data
         LinkedList<IAttributeDataset<T>> partitionedData = this.data.partition(targetAttr);
-        LinkedList<T> distinctData = this.data.distinct(targetAttr);
 
         //Create Edges
-        Edge firstEdges = new Edge();
+        for (IAttributeDataset<T> innerList: partitionedData){
+            LinkedList<IAttributeDataset<T>> distinct = new LinkedList<>();
+            distinct.add(innerList);
+            for (Object obj: distinct) {
+                if (!distinct.contains(obj)){
+                    Edge edge = new Edge();
+                    edge.value = distinct.get(0).attribute;
+                    firstNode.edges.add(edge);
+                }
+            }
 
-        for ()
-
-            firstEdges.value = null;
-
-        if (!firstEdges.decision == FinalDecision){
-
-        }
-
-
-        firstEdges.decision = null;
-        String value;
-        INode decision; //node or another class with an object (int, string)
-
+            //if it is the final node
 
         //create edges: set value and decision can be the rest of the tree on the inner list
         //condition to check if it's final decision or rest of tree
