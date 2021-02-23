@@ -28,17 +28,6 @@ public class ListObjsData<T extends IAttributeDatum>
         this.rows = rows;
         this.attribute = attribute;
     }
-    // data.table.get(1)
-
-    public LinkedList<Object> getColumn(String attribute){
-        LinkedList<Object> column = new LinkedList<>();
-        for(T item: this.rows) {
-            column.add(item.getValueOf(attribute));
-        }
-        return column;
-    }
-
-    //distinct function
 
     @Override
     public LinkedList<String> getAttributes() {

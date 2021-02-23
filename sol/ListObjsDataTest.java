@@ -18,6 +18,7 @@ public class ListObjsDataTest {
         //more than 1 less than 4
         ListObjsData<Candidate> list = new ListObjsData<>(candidates, attribute);
         return list;
-
     }
+
+    public
 }
