@@ -116,12 +116,11 @@ public class ListObjsData<T extends IAttributeDatum>
 
     @Override
     public Object mostCommonValue(String ofAttribute) {
-        IAttributeDataset<T> longest = this.partition(ofAttribute).get(0);
-        for (IAttributeDataset<T> obj: this.partition(ofAttribute)){
-            if (longest.size() < obj.size()){
-                longest = obj;
-            }
+        //helper that returns list of values for attributes for list
+        //object data; run through that list with for loop and count
+        LinkedList<Object> values = new LinkedList<>();
+        for (LinkedList<T> row : this.rows){
+            values.add(row.getValueOf(ofAttribute));
         }
-        return longest.rows.get(0).getValueOf(ofAttribute);
     }
 }
