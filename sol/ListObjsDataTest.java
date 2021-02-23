@@ -11,6 +11,7 @@ public class ListObjsDataTest {
         attribute.add("leadershipExperience");
         attribute.add("lastPositionDuration");
         Candidate c = new Candidate("women", '','','');
+        Candidate c1 = new Candidate("male", '','','');
         LinkedList<Candidate> candidates = new LinkedList<>();
         candidates.add(c);
         candidates.add(c1);
