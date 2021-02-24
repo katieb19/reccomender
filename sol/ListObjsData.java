@@ -74,12 +74,6 @@ public class ListObjsData<T extends IAttributeDatum>
 
     @Override
     public LinkedList<IAttributeDataset<T>> partition(String onAttribute) {
-        // output a linked list w new tables, one of which has rows w green; one has rows with orange
-
-        //helper method that creates a list of the unique values and use
-        //within for loop with list of unique attributes to grab objects
-
-        //WRITE REMOVE FUNCTION that returns new list
         LinkedList<IAttributeDataset<T>> result = new LinkedList<>();
         LinkedList<String> attList = this.removeAtt(onAttribute);
 

@@ -53,9 +53,9 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
             //LinkedList<IAttributeDataset<T>> distinct = new LinkedList<>();
             //maybe ListObjsData
             //distinct.add(innerList);
-                
 
-            for (Object obj: distinct) {
+
+            for (T obj: innerList) {
                 if (!distinct.contains(obj)){
                     Edge edge = new Edge();
                     edge.value = distinct.get(0).attribute;
