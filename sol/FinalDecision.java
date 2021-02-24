@@ -16,5 +16,7 @@ public class FinalDecision implements INode {
     };
 
     // print tree
-    public void printNode(String leadspace);
+    public void printNode(String leadspace){
+        System.out.print("final decision" + this.decision + leadspace);
+    }
 }
