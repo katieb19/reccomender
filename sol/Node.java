@@ -5,7 +5,7 @@ import src.INode;
 
 import java.util.LinkedList;
 
-/*public class Node implements INode {
+public class Node implements INode {
         String attribute;
         LinkedList<Edge> edges;
 
@@ -18,4 +18,4 @@ import java.util.LinkedList;
         public void printNode(String leadspace){
                 ...
         }
-} */
+}

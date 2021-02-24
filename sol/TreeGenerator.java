@@ -13,37 +13,48 @@ import java.util.LinkedList;
  * T is the type of object that we are trying to classify.
  * (like src.Vegetable)
  */
-/*public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
+public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
-    public IAttributeDataset<T> data;
+    public ListObjsData<T> data;
+    public INode tree;
     /**
      * Constructor for this class.
      *
      * @param initTrainingData - IAttributeDataset of the data table
      */
-   /* public TreeGenerator(IAttributeDataset<T> initTrainingData) {
+   public TreeGenerator(ListObjsData<T> initTrainingData) {
         this.data = initTrainingData;
     }
 
     // build a decision tree to predict the named attribute
     @Override
-    /*public INode buildClassifier(String targetAttr) {
+    public INode buildClassifier(String targetAttr) {
         //if it's empty
         //pick first attribute - random  - create node that contains attribute
 
-        //Creating first node with attribute
-        Node firstNode = new Node();
-        firstNode.attribute = targetAttr;
-        firstNode.edges = new LinkedList<>();
+        //remove targetAttr
+        INode tree = new Node(); //OR do we set equal to this.tree
+        ListObjsData<T> dataset = this.data;
+        dataset.removeAtt(targetAttr);
 
-        //Partition data
-        LinkedList<IAttributeDataset<T>> partitionedData = this.data.partition(targetAttr);
+        for (String att : this.data.attribute){
+        //Creating first node with attribute
+            Node firstNode = new Node();
+            String holdingAttribute = dataset.attribute.get(0);
+            firstNode.attribute = holdingAttribute;
+            firstNode.edges = new LinkedList<>();
+
+        //Partition data based on attribute looking at
+            LinkedList<IAttributeDataset<T>> partitionedData =
+                this.data.partition(holdingAttribute);
 
         //Create Edges
-        for (IAttributeDataset<T> innerList: partitionedData){
-            LinkedList<IAttributeDataset<T>> distinct = new LinkedList<>();
+            for (IAttributeDataset<T> innerList: partitionedData){
+            //LinkedList<IAttributeDataset<T>> distinct = new LinkedList<>();
             //maybe ListObjsData
-            distinct.add(innerList);
+            //distinct.add(innerList);
+                
+
             for (Object obj: distinct) {
                 if (!distinct.contains(obj)){
                     Edge edge = new Edge();
@@ -51,6 +62,7 @@ import java.util.LinkedList;
                     firstNode.edges.add(edge);
                 }
             }
+
 
             //if it is the final node
 
@@ -73,4 +85,4 @@ import java.util.LinkedList;
         // TODO: Implement.
     }
 
-} */
+}

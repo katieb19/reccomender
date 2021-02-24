@@ -4,7 +4,6 @@ import src.IAttributeDataset;
 import src.IAttributeDatum;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /*
 for tree generator, need private fields one to represent the tree (Inode class)
@@ -85,7 +84,8 @@ public class ListObjsData<T extends IAttributeDatum>
         LinkedList<String> attList = this.removeAtt(onAttribute);
 
         if (this.allSameValue(onAttribute)){
-            ListObjsData<T> newList = new ListObjsData<T> (this.rows, this.attribute);
+            ListObjsData<T> newList = new ListObjsData<T>
+                    (this.rows, this.attribute);
             result.addFirst(newList);
         } else{
             for(T obj: distinct(this.rows)) {
