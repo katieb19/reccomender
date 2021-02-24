@@ -37,12 +37,12 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         ListObjsData<T> dataset = this.data;
         dataset.removeAtt(targetAttr);
 
-        for (String att : this.data.attribute){
+        //for (String att : this.data.attribute){
         //Creating first node with attribute
-            Node firstNode = new Node();
-            String holdingAttribute = dataset.attribute.get(0);
-            firstNode.attribute = holdingAttribute;
-            firstNode.edges = new LinkedList<>();
+        Node firstNode = new Node();
+        String holdingAttribute = dataset.attribute.get(0);
+        firstNode.attribute = holdingAttribute;
+        firstNode.edges = new LinkedList<>();
 
         //Partition data based on attribute looking at
             LinkedList<IAttributeDataset<T>> partitionedData =
@@ -50,18 +50,14 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
         //Create Edges
             for (IAttributeDataset<T> innerList: partitionedData){
+                Edge edge = new Edge();
+
+
+            }
             //LinkedList<IAttributeDataset<T>> distinct = new LinkedList<>();
             //maybe ListObjsData
             //distinct.add(innerList);
 
-
-            for (T obj: innerList) {
-                if (!distinct.contains(obj)){
-                    Edge edge = new Edge();
-                    edge.value = distinct.get(0).attribute;
-                    firstNode.edges.add(edge);
-                }
-            }
 
 
             //if it is the final node
