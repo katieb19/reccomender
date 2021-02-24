@@ -15,16 +15,37 @@ import java.util.LinkedList;
  */
 public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
-    public ListObjsData<T> data;
-    public INode tree;
+    public IAttributeDataset<T> data;
     /**
      * Constructor for this class.
      *
      * @param initTrainingData - IAttributeDataset of the data table
      */
-   public TreeGenerator(ListObjsData<T> initTrainingData) {
+   public TreeGenerator(IAttributeDataset<T> initTrainingData) {
         this.data = initTrainingData;
     }
+
+    public INode buildNode(String attr){
+       LinkedList<Edge> edgeList = new LinkedList<>();
+       INode node = new Node(attr, edgeList);
+       //IAttributeDataset<T> dataset = this.data;
+       //dataset.removeAtt(attr);
+
+       LinkedList<IAttributeDataset<T>> partitionedData =
+                this.data.partition(attr);
+
+       for (IAttributeDataset<T> inner : partitionedData){
+           this.data = inner;
+           Edge edge1 = new Edge(attr, inner.getSharedValue(attr),
+                   this.buildNode(attr));
+           edgeList.add(edge1);
+       }
+
+       //WHAT HAPPENS FOR A FINAL DECISION/CHECK FOR IF FINAL DECISION?
+       return node;
+    }
+
+
 
     // build a decision tree to predict the named attribute
     @Override
