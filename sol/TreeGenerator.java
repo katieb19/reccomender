@@ -13,7 +13,7 @@ import java.util.LinkedList;
  * T is the type of object that we are trying to classify.
  * (like src.Vegetable)
  */
-public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
+/*public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
     public IAttributeDataset<T> data;
     /**
@@ -21,13 +21,13 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
      *
      * @param initTrainingData - IAttributeDataset of the data table
      */
-    public TreeGenerator(IAttributeDataset<T> initTrainingData) {
+   /* public TreeGenerator(IAttributeDataset<T> initTrainingData) {
         this.data = initTrainingData;
     }
 
     // build a decision tree to predict the named attribute
     @Override
-    public INode buildClassifier(String targetAttr) {
+    /*public INode buildClassifier(String targetAttr) {
         //if it's empty
         //pick first attribute - random  - create node that contains attribute
 
@@ -72,4 +72,5 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     public void printTree() {
         // TODO: Implement.
     }
-}
+
+} */

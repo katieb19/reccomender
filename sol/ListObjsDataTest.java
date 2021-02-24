@@ -2,10 +2,48 @@ package sol;
 
 import java.util.LinkedList;
 
+import tester.Tester;
+
 public class ListObjsDataTest {
-    // setup for Candidate and/or Vegetable
-    // attribute = new LinkedList(gender, leadership)
-    public ListObjsData<Candidate> setup(){
+    public ListObjsData<Vegetable> setupVeg(){
+        LinkedList<String> attribute = new LinkedList<>();
+        attribute.add("name");
+        attribute.add("color");
+        attribute.add("lowCarb");
+        attribute.add("likesToEat");
+        Vegetable v1 = new Vegetable("spinach", "green",
+                true, true);
+        Vegetable v2 = new Vegetable("pea", "green", false,
+                false);
+        Vegetable v3 = new Vegetable("carrot", "orange",
+                true, false);
+        LinkedList<Vegetable> vegetables = new LinkedList<>();
+        vegetables.add(v1);
+        vegetables.add(v2);
+        vegetables.add(v3);
+        ListObjsData<Vegetable> vegList = new ListObjsData<Vegetable>(
+                vegetables, attribute);
+        return vegList;
+    }
+
+
+    public void testGetAttributes(Tester t){
+        ListObjsData<Vegetable> veg = setupVeg();
+        LinkedList<String> attribute = new LinkedList<>();
+        attribute.add("name");
+        attribute.add("color");
+        attribute.add("lowCarb");
+        attribute.add("likesToEat");
+
+        t.checkExpect(veg.getAttributes(), attribute);
+
+        veg.removeAtt("name");
+        veg.removeAtt("color");
+        veg.removeAtt("likesToEat");
+
+        t.checkExpect(veg.getAttributes(), new LinkedList<>().add("lowCarb"));
+    }
+    /*public ListObjsData<Candidate> setup(){
         LinkedList<String> attribute = new LinkedList<String>();
         attribute.add("gender");
         attribute.add("leadershipExperience");
@@ -45,5 +83,9 @@ public class ListObjsDataTest {
         //Multiple elements list
         t.checkExpect(candidates.attribute.equals(LinkedList<String>("gender", "leadershipExperience", "lastPositionDuration",
                 "numWorkExperiences", "programmingLanguages", "gpa", "location", "hired")));
+    } */
+
+    public static void main(String[] args) {
+        Tester.run(new ListObjsDataTest());
     }
 }
