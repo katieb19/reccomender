@@ -29,6 +29,7 @@ public class Node implements INode {
                    }
                    return list.mostCommonValue(this.attribute);
                }
+               //what goes here?
         }
         //currently just returning color for example but we want it to return the whole thing so we need to go through the tree
 

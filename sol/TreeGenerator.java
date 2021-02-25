@@ -16,6 +16,8 @@ import java.util.LinkedList;
 public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
     public IAttributeDataset<T> data;
+    public INode root;
+
     /**
      * Constructor for this class.
      *
@@ -80,8 +82,19 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     // produce the decision predicted for the given datum
     @Override
     public Object lookupRecommendation(IAttributeDatum forVals) {
-        // TODO: Implement.
-        return null;
+        for (Edge edge: this.edges){
+            LinkedList<IAttributeDatum> row = new LinkedList<>();
+            row.add(attrVals);
+            LinkedList<String> str = new LinkedList<>();
+            str.add(this.attribute);
+            ListObjsData<IAttributeDatum> list = new
+                    ListObjsData<IAttributeDatum>(row,
+                    str);
+            if (edge.value.equals(attrVals.getValueOf(this.attribute))){
+                return edge.decision.lookupDecision(attrVals);
+            }
+            return list.mostCommonValue(this.attribute);
+        }
     }
 
     // print the decision tree
