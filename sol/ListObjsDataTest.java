@@ -1,6 +1,7 @@
 package sol;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import tester.Tester;
 
@@ -12,7 +13,7 @@ public class ListObjsDataTest {
         attribute.add("lowCarb");
         attribute.add("likesToEat");
         Vegetable v1 = new Vegetable("spinach", "green",
-                true, true);
+                true, false);
         Vegetable v2 = new Vegetable("pea", "green", false,
                 false);
         Vegetable v3 = new Vegetable("carrot", "orange",
@@ -21,6 +22,21 @@ public class ListObjsDataTest {
         vegetables.add(v1);
         vegetables.add(v2);
         vegetables.add(v3);
+        ListObjsData<Vegetable> vegList = new ListObjsData<Vegetable>(
+                vegetables, attribute);
+        return vegList;
+    }
+
+    public ListObjsData<Vegetable> setuponeVeg(){
+        LinkedList<String> attribute = new LinkedList<>();
+        attribute.add("name");
+        attribute.add("color");
+        attribute.add("lowCarb");
+        attribute.add("likesToEat");
+        Vegetable v1 = new Vegetable("spinach", "green",
+                true, false);
+        LinkedList<Vegetable> vegetables = new LinkedList<>();
+        vegetables.add(v1);
         ListObjsData<Vegetable> vegList = new ListObjsData<Vegetable>(
                 vegetables, attribute);
         return vegList;
@@ -53,66 +69,51 @@ public class ListObjsDataTest {
         t.checkExpect(veg.size() == 0);
     }
 
-    public void testDistinct(){
+    public void testAllSameValue(Tester t){
         ListObjsData<Vegetable> veg = setupVeg();
+        ListObjsData<Vegetable> oneVeg = setuponeVeg();
+        t.checkExpect(veg.allSameValue("likesToEat"), true);
+        t.checkExpect(veg.allSameValue("LIKESTOEAT"), false);
+        t.checkExpect(veg.allSameValue("color"), false);
+        t.checkExpect(oneVeg.allSameValue("color"), true);
+    }
+
+    public void testSize(Tester t){
+        
+    }
+
+    public void testDistinct(Tester t){
+        ListObjsData<Vegetable> veg = setupVeg();
+        Vegetable v4 = new Vegetable("spinach", "green",
+                true, true);
+        veg.rows.add(v4);
 
         //Multiple elements
+        Vegetable v1 = new Vegetable("spinach", "green",
+                true, true);
+        Vegetable v2 = new Vegetable("pea", "green", false,
+                false);
+        Vegetable v3 = new Vegetable("carrot", "orange",
+                true, false);
+        LinkedList<Vegetable> finalList = new LinkedList<>();
+        finalList.add(v1);
+        finalList.add(v2);
+        finalList.add(v3);
+        t.checkExpect(veg.distinct(), finalList);
 
         //One element
+        veg.rows.remove(v4);
+        veg.rows.remove(v3);
+        veg.rows.remove(v1);
+        t.checkExpect(veg.distinct(), new LinkedList<>().add(v2));
 
         //Empty List
+        veg.rows.remove(v2);
+        t.checkExpect(veg.distinct(), new LinkedList<>());
+
     }
 
 
-
-
-
-
-
-
-
-
-    /*public ListObjsData<Candidate> setup(){
-        LinkedList<String> attribute = new LinkedList<String>();
-        attribute.add("gender");
-        attribute.add("leadershipExperience");
-        attribute.add("lastPositionDuration");
-        attribute.add("numWorkExperiences");
-        attribute.add("programmingLanguages");
-        attribute.add("gpa");
-        attribute.add("location");
-        attribute.add("hired");
-        Candidate c = new Candidate("women", true, "16 Months",
-                "4", "Python", "3.9", "New York", true);
-        Candidate c1 = new Candidate("male", true, "2 Months",
-                "1", "Python, Scala", "3.8", "New York", false);
-        LinkedList<Candidate> candidates = new LinkedList<>();
-        candidates.add(c);
-        candidates.add(c1);
-        //more than 1 less than 4
-        ListObjsData<Candidate> list = new ListObjsData<>(candidates, attribute);
-        return list;
-    }
-
-    public LinkedList<String> testGetAttributes(t Tester){
-        setup();
-
-        //Empty attribute list
-        LinkedList<String> emptyList = new LinkedList<String>();
-        candidates.removeAttr("gender");
-        attribute.removeAttr("leadershipExperience");
-        attribute.removeAttr("lastPositionDuration");
-        attribute.removeAttr("numWorkExperiences");
-        attribute.removeAttr("programmingLanguages");
-        attribute.removeAttr("gpa");
-        attribute.removeAttr("location");
-        attribute.removeAttr("hired");
-        t.checkExpect(candidates.attribute.equals(emptyList));
-
-        //Multiple elements list
-        t.checkExpect(candidates.attribute.equals(LinkedList<String>("gender", "leadershipExperience", "lastPositionDuration",
-                "numWorkExperiences", "programmingLanguages", "gpa", "location", "hired")));
-    } */
 
     public static void main(String[] args) {
         Tester.run(new ListObjsDataTest());

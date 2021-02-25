@@ -50,9 +50,9 @@ public class ListObjsData<T extends IAttributeDatum>
     }
 
 
-    public LinkedList<T> distinct(LinkedList<T> items){
+    public LinkedList<T> distinct(){
         LinkedList<T> distinct = new LinkedList<>();
-        for (T obj: items){
+        for (T obj: this.rows){
             if (!distinct.contains(obj)){
                 distinct.add(obj);
             }
@@ -82,7 +82,7 @@ public class ListObjsData<T extends IAttributeDatum>
                     (this.rows, this.attribute);
             result.addFirst(newList);
         } else{
-            for(T obj: distinct(this.rows)) {
+            for(T obj: distinct()) {
                 LinkedList<T> newList = new LinkedList<>();
                 for (T row: this.rows) {
                     if (obj.equals(row.getValueOf(onAttribute))) {
