@@ -17,11 +17,11 @@ public class Node implements INode {
         // traverse tree based on attribute values to retrieve decision
         public Object lookupDecision(IAttributeDatum attrVals){
                if (this.edges == null){
-
+                       return attrVals.getValueOf(this.attribute);
                }
-
-
-                return attrVals.getValueOf(this.attribute);
+               else{
+                       //recursion
+               }
         }
         //currently just returning color for esxample but we want it to return the whole thing so we need to go through the tree
 
