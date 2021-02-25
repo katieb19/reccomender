@@ -16,12 +16,19 @@ public class Node implements INode {
 
         // traverse tree based on attribute values to retrieve decision
         public Object lookupDecision(IAttributeDatum attrVals){
-               return attrVals.getValueOf(this.attribute);
+               if (this.edges == null){
+
+               }
+
+
+                return attrVals.getValueOf(this.attribute);
         }
+        //currently just returning color for esxample but we want it to return the whole thing so we need to go through the tree
 
         // print tree
         public void printNode(String leadspace){
                 System.out.print("attribute" + this.attribute);
                 System.out.print(leadspace + "edges" + this.edges);
+                //for each node in the tree
         }
 }

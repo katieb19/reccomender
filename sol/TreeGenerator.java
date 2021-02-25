@@ -25,68 +25,47 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         this.data = initTrainingData;
     }
 
-    public INode buildNode(String attr){
-       LinkedList<Edge> edgeList = new LinkedList<>();
-       INode node = new Node(attr, edgeList);
-       //IAttributeDataset<T> dataset = this.data;
-       //dataset.removeAtt(attr);
 
-       LinkedList<IAttributeDataset<T>> partitionedData =
-                this.data.partition(attr);
-
-       for (IAttributeDataset<T> inner : partitionedData){
-           this.data = inner;
-           Edge edge1 = new Edge(attr, inner.getSharedValue(attr),
-                   this.buildNode(attr));
-           edgeList.add(edge1);
-       }
-
-       //WHAT HAPPENS FOR A FINAL DECISION/CHECK FOR IF FINAL DECISION?
-       return node;
-    }
-
-
-
+// BASE CASE: out of attributes, in that case pick most common answer OR all options have same for targetAttr value (check if true FIRST)
     // build a decision tree to predict the named attribute
     @Override
     public INode buildClassifier(String targetAttr) {
-        //if it's empty
-        //pick first attribute - random  - create node that contains attribute
 
-        //remove targetAttr
-        INode tree = new Node(); //OR do we set equal to this.tree
-        ListObjsData<T> dataset = this.data;
-        dataset.removeAtt(targetAttr);
-
-        //for (String att : this.data.attribute){
-        //Creating first node with attribute
-        Node firstNode = new Node();
+       //Setup
+        IAttributeDataset<T> dataset = this.data;
+        dataset.removeAtt(targetAttr); //doesn't work bc we don't have listObjsData
         String holdingAttribute = dataset.attribute.get(0);
-        firstNode.attribute = holdingAttribute;
-        firstNode.edges = new LinkedList<>();
+        LinkedList<Edge> edgeList = new LinkedList<>();
+        INode finalNode = new Node(holdingAttribute, edgeList);
 
-        //Partition data based on attribute looking at
+        //Cases
+        // empty Attribute List - out of attributes
+        if (this.data.attribute == null){ //do we need listObjsData
+            return finalNode;
+
+            //all options have same value for target attribute
+        } else if (this.data.allSameValue(targetAttr)){
+            FinalDecision finalDecision = new FinalDecision(this.data.getSharedValue(targetAttr));
+            Edge newEdge = new Edge(targetAttr, this.data.getSharedValue(holdingAttribute), finalDecision);
+            edgeList.add(newEdge);
+            return finalNode;
+
+         // Not an edge case
+        } else{
+
+            //Partition data based on attribute looking at
             LinkedList<IAttributeDataset<T>> partitionedData =
-                this.data.partition(holdingAttribute);
+                    this.data.partition(holdingAttribute);
 
-        //Create Edges
-            for (IAttributeDataset<T> innerList: partitionedData){
-                Edge edge = new Edge();
-
-
+            //Create Edges
+            for (IAttributeDataset<T> inner: partitionedData){
+                this.data = inner;
+                Edge edge1 = new Edge(holdingAttribute, inner.getSharedValue(holdingAttribute),
+                        this.buildClassifier(holdingAttribute));
+                edgeList.add(edge1);
             }
-            //LinkedList<IAttributeDataset<T>> distinct = new LinkedList<>();
-            //maybe ListObjsData
-            //distinct.add(innerList);
-
-
-
-            //if it is the final node
-
-        //create edges: set value and decision can be the rest of the tree on the inner list
-        //condition to check if it's final decision or rest of tree
-        // recursive
-
+            return finalNode;
+        }
     }
 
     // produce the decision predicted for the given datum
