@@ -79,7 +79,14 @@ public class ListObjsDataTest {
     }
 
     public void testSize(Tester t){
-        
+        ListObjsData<Vegetable> veg = setupVeg();
+        Vegetable v1 = new Vegetable("spinach", "green",
+                true, false);
+        ListObjsData<Vegetable> oneVeg = setuponeVeg();
+        t.checkExpect(veg.size(), 3);
+        t.checkExpect(oneVeg.size(), 1);
+        oneVeg.rows.remove(v1);
+        t.checkExpect(oneVeg.size(), 0);
     }
 
     public void testDistinct(Tester t){
