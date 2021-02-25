@@ -33,7 +33,7 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
        //Setup
         IAttributeDataset<T> dataset = this.data;
-        dataset.removeAtt(targetAttr); //doesn't work bc we don't have listObjsData
+        dataset.remove(targetAttr); //doesn't work bc we don't have listObjsData
         String holdingAttribute = dataset.attribute.get(0);
         LinkedList<Edge> edgeList = new LinkedList<>();
         INode finalNode = new Node(holdingAttribute, edgeList);
