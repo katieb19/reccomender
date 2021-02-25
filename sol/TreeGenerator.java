@@ -41,15 +41,15 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     public INode buildClassifier(String targetAttr) {
 
        //Setup
-        IAttributeDataset<T> data = this.data;
-        data.removeAttr(targetAttr); //doesn't work bc we don't have listObjsData
-        String holdingAttribute = data.attribute.get(0);
+        IAttributeDataset<T> dataSet = this.data;
+        dataSet.removeAttr(targetAttr); //doesn't work bc we don't have listObjsData
+        String holdingAttribute = dataSet.attribute.get(0);
         LinkedList<Edge> edgeList = new LinkedList<>();
         INode finalNode = new Node(holdingAttribute, edgeList);
 
         //Cases
         // empty Attribute List - out of attributes
-        if (data.attribute == null){ //do we need listObjsData
+        if (dataSet.attribute == null){ //do we need listObjsData
             return finalNode;
 
             //all options have same value for target attribute
@@ -87,7 +87,7 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     // print the decision tree
     @Override
     public void printTree() {
-        // TODO: Implement.
+        System.out.println(this.data);
     }
 
 }
