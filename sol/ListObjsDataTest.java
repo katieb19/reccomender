@@ -186,6 +186,36 @@ public class ListObjsDataTest {
     }
 
     public void testGetSharedValue(Tester t){
+        //Multiple elements - shared value
+        ListObjsData<Vegetable> oneVeg = setuponeVeg();
+        Vegetable v2 = new Vegetable("pea", "green", false,
+                false);
+        Vegetable v3 = new Vegetable("lettuce", "green",
+                true, true);
+
+        oneVeg.rows.add(v2);
+        oneVeg.rows.add(v3);
+
+        t.checkExpect(oneVeg.getSharedValue("color"), "green");
+
+        //Multiple elements, no shared value
+        ListObjsData<Vegetable> noSharedVeg = setuponeVeg();
+        Vegetable v4 = new Vegetable("carrot", "orange",
+                true, false);
+        Vegetable v5 = new Vegetable("beets", "red",
+                true, true);
+        t.checkExpect(noSharedVeg.getSharedValue("color"), null);
+
+        //Single Element
+        ListObjsData<Vegetable> singleVeg = setuponeVeg();
+        t.checkExpect(noSharedVeg.getSharedValue("color"), "green");
+
+        //Empty List
+        ListObjsData<Vegetable> noVeg = setuponeVeg();
+        Vegetable v1 = new Vegetable("spinach", "green",
+                true, false);
+        noVeg.rows.remove(v1);
+        t.checkExpect(noVeg.getSharedValue("color"), null);
 
     }
 
