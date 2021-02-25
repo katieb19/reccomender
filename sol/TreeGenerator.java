@@ -40,7 +40,7 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
         //Cases
         // empty Attribute List - out of attributes
-        if (this.data.attribute == null){ //do we need listObjsData
+        if (dataset.attribute == null){ //do we need listObjsData
             return finalNode;
 
             //all options have same value for target attribute

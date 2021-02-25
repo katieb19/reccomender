@@ -12,6 +12,9 @@ public interface IAttributeDataset<T extends IAttributeDatum> {
     // number of data/rows in the dataset
     public int size();
 
+
+    //public LinkedList<String> removeAtt(String attribute);
+
     // partition rows into subsets such that each subset has same value of
     // onAttribute
     public LinkedList<IAttributeDataset<T>> partition(String onAttribute);

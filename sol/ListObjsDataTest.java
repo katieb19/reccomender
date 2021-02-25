@@ -29,6 +29,8 @@ public class ListObjsDataTest {
 
     public void testGetAttributes(Tester t){
         ListObjsData<Vegetable> veg = setupVeg();
+
+        //Multiple attributes
         LinkedList<String> attribute = new LinkedList<>();
         attribute.add("name");
         attribute.add("color");
@@ -37,12 +39,39 @@ public class ListObjsDataTest {
 
         t.checkExpect(veg.getAttributes(), attribute);
 
+        //Only one attribute
         veg.removeAtt("name");
         veg.removeAtt("color");
         veg.removeAtt("likesToEat");
 
         t.checkExpect(veg.getAttributes(), new LinkedList<>().add("lowCarb"));
+
+        //Empty Attributes list
+        veg.removeAtt("lowCarb");
+        LinkedList<String> emptyList = new LinkedList<>();
+        t.checkExpect(veg.equals(emptyList));
+        t.checkExpect(veg.size() == 0);
     }
+
+    public void testDistinct(){
+        ListObjsData<Vegetable> veg = setupVeg();
+
+        //Multiple elements
+
+        //One element
+
+        //Empty List
+    }
+
+
+
+
+
+
+
+
+
+
     /*public ListObjsData<Candidate> setup(){
         LinkedList<String> attribute = new LinkedList<String>();
         attribute.add("gender");
