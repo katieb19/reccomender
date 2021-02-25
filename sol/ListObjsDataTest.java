@@ -3,6 +3,7 @@ package sol;
 import java.util.LinkedList;
 import java.util.List;
 
+import src.IAttributeDataset;
 import tester.Tester;
 
 public class ListObjsDataTest {
@@ -120,7 +121,77 @@ public class ListObjsDataTest {
 
     }
 
+    public void testPartition(Tester t){
+        //Multiple elements
+        ListObjsData<Vegetable> veg = setupVeg();
 
+        Vegetable v4 = new Vegetable("lettuce", "green",
+                true, true);
+        Vegetable v5 = new Vegetable("beets", "red",
+                true, true);
+        Vegetable v6 = new Vegetable("tomato", "red",
+                true, true);
+
+        veg.rows.add(v4);
+        veg.rows.add(v5);
+        veg.rows.add(v6);
+
+        LinkedList<IAttributeDataset<Vegetable>> partitionedData = veg.partition("color");
+
+        //Green
+        LinkedList<Vegetable> green = new LinkedList<>();
+        Vegetable v1 = new Vegetable("spinach", "green",
+                true, false);
+        Vegetable v2 = new Vegetable("pea", "green", false,
+                false);
+        green.add(v1);
+        green.add(v2);
+        green.add(v4);
+
+        //Red
+        LinkedList<Vegetable> red = new LinkedList<>();
+        red.add(v5);
+        red.add(v6);
+
+        //Orange
+        LinkedList<Vegetable> orange = new LinkedList<>();
+        Vegetable v3 = new Vegetable("carrot", "orange",
+                true, false);
+        orange.add(v3);
+
+        t.checkExpect(partitionedData.size(), 3);
+        t.checkExpect(partitionedData.contains(green));
+        t.checkExpect(partitionedData.contains(red));
+        t.checkExpect(partitionedData.contains(orange));
+
+        //One element
+        ListObjsData<Vegetable> oneVeg = setuponeVeg();
+        LinkedList<IAttributeDataset<Vegetable>> singlePartitionedData = oneVeg.partition("color");
+
+        LinkedList<Vegetable> oneGreen = new LinkedList<>();
+        Vegetable greenV1 = new Vegetable("spinach", "green",
+                true, false);
+        oneGreen.add(greenV1);
+
+        t.checkExpect(singlePartitionedData.size(), 1);
+        t.checkExpect(singlePartitionedData.contains(oneGreen));
+
+        //Empty List
+        LinkedList<Vegetable> emptyList = new LinkedList<>();
+        LinkedList<String> attribute = new LinkedList<>();
+        ListObjsData<Vegetable> newEmpty = new ListObjsData<Vegetable>(
+                emptyList, attribute);
+        newEmpty.partition("color");
+        t.checkExpect(newEmpty.size(), 0);
+    }
+
+    public void testGetSharedValue(Tester t){
+
+    }
+
+    public void testMostCommonValue(Tester t){
+
+    }
 
 
     public static void main(String[] args) {

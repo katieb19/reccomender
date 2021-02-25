@@ -25,6 +25,15 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         this.data = initTrainingData;
     }
 
+    public IAttributeDataset<T> removeAttr(String attribute) {
+        IAttributeDataset<T> newList = this.data;
+        for (String str : newList) {
+            if (str.equals(attribute)) {
+                newList.removeAttr(attribute);
+            }
+        }
+        return newList;
+    }
 
 // BASE CASE: out of attributes, in that case pick most common answer OR all options have same for targetAttr value (check if true FIRST)
     // build a decision tree to predict the named attribute
@@ -32,15 +41,15 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     public INode buildClassifier(String targetAttr) {
 
        //Setup
-        IAttributeDataset<T> dataset = this.data;
-        dataset.remove(targetAttr); //doesn't work bc we don't have listObjsData
-        String holdingAttribute = dataset.attribute.get(0);
+        IAttributeDataset<T> data = this.data;
+        data.removeAttr(targetAttr); //doesn't work bc we don't have listObjsData
+        String holdingAttribute = data.attribute.get(0);
         LinkedList<Edge> edgeList = new LinkedList<>();
         INode finalNode = new Node(holdingAttribute, edgeList);
 
         //Cases
         // empty Attribute List - out of attributes
-        if (dataset.attribute == null){ //do we need listObjsData
+        if (data.attribute == null){ //do we need listObjsData
             return finalNode;
 
             //all options have same value for target attribute
