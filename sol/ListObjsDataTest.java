@@ -220,7 +220,34 @@ public class ListObjsDataTest {
     }
 
     public void testMostCommonValue(Tester t){
+        //Multiple elements
+        ListObjsData<Vegetable> veg = setupVeg();
+        t.checkExpect(veg.mostCommonValue("color"), "green");
 
+        ListObjsData<Vegetable> veg2 = setupVeg();
+        Vegetable v2 = new Vegetable("beets", "red",
+                true, true);
+        Vegetable v3 = new Vegetable("tomato", "red",
+                true, true);
+        Vegetable v4 = new Vegetable("berries", "red",
+                true, true);
+        veg2.rows.add(v2);
+        veg2.rows.add(v3);
+        veg2.rows.add(v4);
+
+        t.checkExpect(veg.mostCommonValue("color"), "red");
+
+
+        //One element
+        ListObjsData<Vegetable> singleVeg = setuponeVeg();
+        t.checkExpect(veg.mostCommonValue("color"), "green");
+
+        //Empty list
+        ListObjsData<Vegetable> noVeg = setuponeVeg();
+        Vegetable v1 = new Vegetable("spinach", "green",
+                true, true);
+        noVeg.rows.remove(v1);
+        t.checkExpect(veg.mostCommonValue("color"), null);
     }
 
 
