@@ -5,6 +5,11 @@ package src;
  * a set of attributes.
  */
 public interface IAttributeDatum {
-  // look up the value associated with the named attribute
+
+  /**
+   * Looks up the value associated with the named attribute.
+   *
+   * @param attributeName - String - wanted attribute
+   */
   public Object getValueOf(String attributeName);
 }

@@ -1,12 +1,26 @@
 package src;
 
 public interface IGenerator {
-    // build a decision tree to predict the named attribute
+
+    /**
+     * Builds a decision tree to predict the named attribute.
+     *
+     * @param targetAttr - String - wanted attribute
+     */
     public INode buildClassifier(String targetAttr);
 
-    // produce the decision predicted for the given datum
+
+    /**
+     * Produces the decision predicted for the given datum.
+     *
+     * @param forVals - IAttributeDatum
+     */
     public Object lookupRecommendation(IAttributeDatum forVals);
 
-    // print the decision tree
+
+    /**
+     * Prints the decision tree.
+     *
+     */
     public void printTree();
 }

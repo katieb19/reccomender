@@ -25,9 +25,6 @@ public interface IAttributeDataset<T extends IAttributeDatum> {
     public int size();
 
 
-    //public LinkedList<String> removeAtt(String attribute);
-
-
     /**
      * partition rows into subsets such that each subset has same value of onAttribute.
      *
