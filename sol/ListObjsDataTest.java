@@ -56,16 +56,16 @@ public class ListObjsDataTest {
         t.checkExpect(veg.getAttributes(), attribute);
 
         //Only one attribute
-        veg.removeAtt("name");
-        veg.removeAtt("color");
-        veg.removeAtt("likesToEat");
+        veg.attribute.remove("name");
+        veg.attribute.remove("color");
+        veg.attribute.remove("likesToEat");
 
         t.checkExpect(veg.getAttributes(), new LinkedList<>().add("lowCarb"));
 
         //Empty Attributes list
-        veg.removeAtt("lowCarb");
+        veg.attribute.remove("lowCarb");
         LinkedList<String> emptyList = new LinkedList<>();
-        t.checkExpect(veg.equals(emptyList));
+        t.checkExpect(veg.size(), emptyList);
         t.checkExpect(veg.size() == 0);
     }
 
@@ -119,6 +119,7 @@ public class ListObjsDataTest {
         t.checkExpect(veg.distinct(), new LinkedList<>());
 
     }
+
 
 
 

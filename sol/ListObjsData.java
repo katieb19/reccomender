@@ -61,21 +61,22 @@ public class ListObjsData<T extends IAttributeDatum>
     }
 
 
-    public LinkedList<String> removeAtt(String attribute) {
-        LinkedList<String> newList = this.attribute;
-        for (String str : newList) {
-            if (str.equals(attribute)) {
-                newList.remove(attribute);
-            }
-        }
-        return newList;
-    }
+//    public LinkedList<String> removeAtt(String attribute) {
+//        LinkedList<String> newList = this.attribute;
+//        for (String str : newList) {
+//            if (str.equals(attribute)) {
+//                newList.remove(attribute);
+//            }
+//        }
+//        return newList;
+//    }
 
 
     @Override
     public LinkedList<IAttributeDataset<T>> partition(String onAttribute) {
         LinkedList<IAttributeDataset<T>> result = new LinkedList<>();
-        LinkedList<String> attList = this.removeAtt(onAttribute);
+        LinkedList<String> attList = this.attribute;
+        attList.remove(onAttribute);
 
         if (this.allSameValue(onAttribute)){
             ListObjsData<T> newList = new ListObjsData<T>
