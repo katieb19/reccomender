@@ -34,6 +34,12 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     @Override
     public INode buildClassifier(String targetAttr) {
 
+        // Empty data
+        if (this.data == null){
+            FinalDecision finalDecision = new FinalDecision(this.data.mostCommonValue(targetAttr));
+            return finalDecision;
+        }
+
         //Setup
         IAttributeDataset<T> dataSet = this.data;
         LinkedList<String> attributes = dataSet.getAttributes();
@@ -45,12 +51,6 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         LinkedList<Edge> edgeList = new LinkedList<>();
 
         INode finalNode = new Node(holdingAttribute, edgeList);
-
-        // Empty data
-        if (this.data == null){
-            FinalDecision finalDecision = new FinalDecision(this.data.mostCommonValue(holdingAttribute));
-            return finalDecision;
-        }
 
         //One Attribute left
         if (this.data.size() == 1) {
