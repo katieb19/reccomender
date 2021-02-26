@@ -4,6 +4,7 @@ import src.IAttributeDataset;
 import src.IAttributeDatum;
 
 import javax.print.attribute.standard.JobKOctets;
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 
 /*
@@ -69,7 +70,10 @@ public class ListObjsData<T extends IAttributeDatum>
         LinkedList<String> attList = this.attribute;
         attList.remove(onAttribute);
 
-        if (this.allSameValue(onAttribute)){
+        if (this.rows.size() <= 0){
+            throw new IndexOutOfBoundsException("less than or = to 0");
+        }
+        else if (this.allSameValue(onAttribute)){
             ListObjsData<T> newList = new ListObjsData<T>
                     (this.rows, this.attribute);
             result.addFirst(newList);
@@ -93,6 +97,7 @@ public class ListObjsData<T extends IAttributeDatum>
         if (this.allSameValue(ofAttribute)){
             return this.rows.get(0).getValueOf(ofAttribute);
         }
+        //throw new IndexOutOfBoundsException("no shared value");
         return null;
     }
 

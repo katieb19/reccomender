@@ -136,34 +136,27 @@ public class ListObjsDataTest {
      * A tester
      * @param t
      */
-//    public void testDistinct(Tester t){
-//        ListObjsData<Vegetable> veg = setupVeg();
-//        ListObjsData<Vegetable> oneveg = setuponeVeg();
-//        ListObjsData<Vegetable> empty = setupnoVeg();
-//
-//        //Multiple elements
-//        Vegetable v1 = new Vegetable("spinach", "green",
-//                true, false);
-//        Vegetable v2 = new Vegetable("pea", "green", false,
-//                false);
-//        Vegetable v3 = new Vegetable("carrot", "orange",
-//                true, false);
-//        LinkedList<Vegetable> finalList = new LinkedList<>();
-//        finalList.add(v1);
-//        finalList.add(v2);
-//        finalList.add(v3);
-//        t.checkExpect(veg.distinct("color"), finalList);
-//
-//        //One element
-//        LinkedList<Vegetable> one = new LinkedList<>();
-//        one.add(v1);
-//        t.checkExpect(oneveg.distinct("color"), one);
-//
-//        //Empty element
-//        LinkedList<Vegetable> emptyList = new LinkedList<>();
-//        t.checkExpect(empty.distinct("color").size(), 0);
-//        t.checkExpect(empty.distinct("color").equals(emptyList));
-//    }
+    public void testDistinct(Tester t){
+        ListObjsData<Vegetable> veg = setupVeg();
+        ListObjsData<Vegetable> oneveg = setuponeVeg();
+        ListObjsData<Vegetable> empty = setupnoVeg();
+
+        //Multiple elements
+        LinkedList<String> color = new LinkedList<>();
+        color.add("green");
+        color.add("orange");
+        t.checkExpect(veg.distinct("color"), color);
+
+        //One element
+        LinkedList<String> color1 = new LinkedList<>();
+        color1.add("green");
+        t.checkExpect(oneveg.distinct("color"), color1);
+
+        //Empty element
+        LinkedList<Vegetable> emptyList = new LinkedList<>();
+        t.checkExpect(empty.distinct("color").size(), 0);
+        t.checkExpect(empty.distinct("color").equals(emptyList));
+    }
 
     public void testPartition(Tester t){
         //Multiple elements
@@ -226,32 +219,32 @@ public class ListObjsDataTest {
 
         //One element
         ListObjsData<Vegetable> oneVeg = setuponeVeg();
-        LinkedList<IAttributeDataset<Vegetable>> singlePartitionedData = oneVeg.partition("color");
+        LinkedList<IAttributeDataset<Vegetable>> singlePartitionedData =
+                oneVeg.partition("color");
 
-        LinkedList<String> attribute4 = new LinkedList<>();
         LinkedList<Vegetable> vegetables4 = new LinkedList<>();
         ListObjsData<Vegetable> oneGreen = new ListObjsData<Vegetable>(
-                vegetables4, attribute4);
+                vegetables4, attribute);
         Vegetable greenV1 = new Vegetable("spinach", "green",
                 true, false);
         oneGreen.rows.add(greenV1);
 
-        //t.checkExpect(singlePartitionedData.size(), 1);
-        //t.checkExpect(singlePartitionedData.contains(oneGreen));
+        t.checkExpect(singlePartitionedData.size(), 1);
+        t.checkExpect(singlePartitionedData.get(0), oneGreen);
 
         //Empty List
         LinkedList<Vegetable> emptyList = new LinkedList<>();
         LinkedList<String> attribute5 = new LinkedList<>();
         ListObjsData<Vegetable> newEmpty = new ListObjsData<Vegetable>(
                 emptyList, attribute5);
-        //newEmpty.partition("color");
-        //t.checkExpect(newEmpty.size(), 0);
+        t.checkException(new IndexOutOfBoundsException("less than or = to 0"),
+                newEmpty, "partition", "color");
     }
 
     public void testGetSharedValue(Tester t){
         //Multiple elements - shared value
         ListObjsData<Vegetable> oneVeg = setuponeVeg();
-        Vegetable v2 = new Vegetable("pea", "green", false,
+        Vegetable v2 = new Vegetable("pea", "green", true,
                 false);
         Vegetable v3 = new Vegetable("lettuce", "green",
                 true, true);
@@ -259,7 +252,9 @@ public class ListObjsDataTest {
         oneVeg.rows.add(v2);
         oneVeg.rows.add(v3);
 
-        t.checkExpect(oneVeg.getSharedValue("color"), "green");
+        t.checkExpect(oneVeg.getSharedValue("color"),
+                "green");
+        t.checkExpect(oneVeg.getSharedValue("lowCarb"), true);
 
         //Multiple elements, no shared value
         ListObjsData<Vegetable> noSharedVeg = setupVeg();
@@ -270,21 +265,17 @@ public class ListObjsDataTest {
         noSharedVeg.rows.add(v4);
         noSharedVeg.rows.add(v5);
 
-        t.checkExpect(noSharedVeg.getSharedValue("color"), null);
+        //t.checkExpect(noSharedVeg.getSharedValue("color"), null);
 
         //Single Element
         ListObjsData<Vegetable> singleVeg = setuponeVeg();
         //t.checkExpect(noSharedVeg.getSharedValue("color"), "green");
 
-        //Empty List
-        ListObjsData<Vegetable> noVeg = setupnoVeg();
-        //t.checkExpect(noVeg.getSharedValue("color"), null);
     }
 
     public void testMostCommonValue(Tester t){
         //Multiple elements
         ListObjsData<Vegetable> veg = setupVeg();
-        //t.checkExpect(veg.mostCommonValue("color"), "green");
 
         ListObjsData<Vegetable> veg2 = setupVeg();
         Vegetable v2 = new Vegetable("beets", "red",
@@ -292,20 +283,20 @@ public class ListObjsDataTest {
         Vegetable v3 = new Vegetable("tomato", "red",
                 true, true);
         Vegetable v4 = new Vegetable("berries", "red",
-                true, true);
+                true, false);
         veg2.rows.add(v2);
         veg2.rows.add(v3);
         veg2.rows.add(v4);
 
-        //t.checkExpect(veg.mostCommonValue("color"), "red");
+        t.checkExpect(veg.mostCommonValue("color"), "green");
+        t.checkExpect(veg2.mostCommonValue("color"), "red");
+        t.checkExpect(veg2.mostCommonValue("lowCarb"), true);
+        t.checkExpect(veg2.mostCommonValue("likesToEat"),
+                false);
 
         //One element
         ListObjsData<Vegetable> singleVeg = setuponeVeg();
-        //t.checkExpect(veg.mostCommonValue("color"), "green");
-
-        //Empty list
-        ListObjsData<Vegetable> noVeg = setupnoVeg();
-        //t.checkExpect(noVeg.mostCommonValue("color"), null);
+        t.checkExpect(veg.mostCommonValue("color"), "green");
     }
 
 
