@@ -16,20 +16,19 @@ public class Node implements INode {
 
         // traverse tree based on attribute values to retrieve decision
         public Object lookupDecision(IAttributeDatum attrVals){
-               for (Edge edge: this.edges){
-                   LinkedList<IAttributeDatum> row = new LinkedList<>();
-                   row.add(attrVals);
-                   LinkedList<String> str = new LinkedList<>();
-                   str.add(this.attribute);
-                   ListObjsData<IAttributeDatum> list = new
-                           ListObjsData<IAttributeDatum>(row,
-                           str);
+            LinkedList<IAttributeDatum> row = new LinkedList<>();
+            row.add(attrVals);
+            LinkedList<String> str = new LinkedList<>();
+            str.add(this.attribute);
+            ListObjsData<IAttributeDatum> list = new
+                    ListObjsData<IAttributeDatum>(row,
+                    str);
+            for (Edge edge: this.edges){
                    if (edge.value.equals(attrVals.getValueOf(this.attribute))){
                        return edge.decision.lookupDecision(attrVals);
                    }
-                   return list.mostCommonValue(this.attribute);
                }
-               //what goes here?
+            return list.mostCommonValue(this.attribute);
         }
         //currently just returning color for example but we want it to return the whole thing so we need to go through the tree
 

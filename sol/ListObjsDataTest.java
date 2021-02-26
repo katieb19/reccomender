@@ -66,8 +66,7 @@ public class ListObjsDataTest {
         //Empty Attributes list
         veg.attribute.remove("lowCarb");
         LinkedList<String> emptyList = new LinkedList<>();
-        t.checkExpect(veg.size(), emptyList);
-        t.checkExpect(veg.size() == 0);
+        t.checkExpect(veg.size(), 0);
     }
 
     public void testAllSameValue(Tester t){

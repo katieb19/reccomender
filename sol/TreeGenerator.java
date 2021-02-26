@@ -6,6 +6,7 @@ import src.IGenerator;
 import src.INode;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 /*
  * Class for creating and interacting with a decision tree given a dataset.
@@ -27,15 +28,6 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         this.data = initTrainingData;
     }
 
-    public IAttributeDataset<T> removeAttr(String attribute) {
-        IAttributeDataset<T> newList = this.data;
-        for (String str : newList) {
-            if (str.equals(attribute)) {
-                newList.removeAttr(attribute);
-            }
-        }
-        return newList;
-    }
 
 // BASE CASE: out of attributes, in that case pick most common answer OR all options have same for targetAttr value (check if true FIRST)
     // build a decision tree to predict the named attribute
@@ -44,14 +36,16 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
        //Setup
         IAttributeDataset<T> dataSet = this.data;
-        dataSet.removeAttr(targetAttr); //doesn't work bc we don't have listObjsData
-        String holdingAttribute = dataSet.attribute.get(0);
+        LinkedList<String> attributes = dataSet.getAttributes();
+        attributes.remove(targetAttr); //doesn't work bc we don't have listObjsData
+        Random num = new Random();
+        String holdingAttribute = attributes.get(num.nextInt(attributes.size()));
         LinkedList<Edge> edgeList = new LinkedList<>();
         INode finalNode = new Node(holdingAttribute, edgeList);
 
         //Cases
         // empty Attribute List - out of attributes
-        if (dataSet.attribute == null){ //do we need listObjsData
+        if (dataSet.getAttributes() == null){ //do we need listObjsData
             return finalNode;
 
             //all options have same value for target attribute
@@ -75,6 +69,7 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
                         this.buildClassifier(holdingAttribute));
                 edgeList.add(edge1);
             }
+            this.root = finalNode;
             return finalNode;
         }
     }
@@ -82,19 +77,7 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     // produce the decision predicted for the given datum
     @Override
     public Object lookupRecommendation(IAttributeDatum forVals) {
-        for (Edge edge: this.edges){
-            LinkedList<IAttributeDatum> row = new LinkedList<>();
-            row.add(attrVals);
-            LinkedList<String> str = new LinkedList<>();
-            str.add(this.attribute);
-            ListObjsData<IAttributeDatum> list = new
-                    ListObjsData<IAttributeDatum>(row,
-                    str);
-            if (edge.value.equals(attrVals.getValueOf(this.attribute))){
-                return edge.decision.lookupDecision(attrVals);
-            }
-            return list.mostCommonValue(this.attribute);
-        }
+        return this.root.lookupDecision(forVals);
     }
 
     // print the decision tree
@@ -102,5 +85,7 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     public void printTree() {
         System.out.println(this.data);
     }
+
+    // add spaces each time go through the tree
 
 }
