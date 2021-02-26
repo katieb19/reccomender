@@ -35,7 +35,9 @@ public class Node implements INode {
         // print tree
         public void printNode(String leadspace){
                 System.out.print("attribute" + this.attribute);
-                System.out.print(leadspace + "edges" + this.edges);
-                //for each node in the tree
+                for (Edge edge : this.edges) {
+                    System.out.print("value" + edge.value);
+                    edge.decision.printNode("   ");
+                }
         }
 }

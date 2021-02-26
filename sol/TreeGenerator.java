@@ -83,9 +83,8 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     // print the decision tree
     @Override
     public void printTree() {
-        System.out.println(this.data);
+        this.root.printNode("           ");
     }
 
-    // add spaces each time go through the tree
 
 }
