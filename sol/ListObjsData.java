@@ -3,6 +3,7 @@ package sol;
 import src.IAttributeDataset;
 import src.IAttributeDatum;
 
+import javax.print.attribute.standard.JobKOctets;
 import java.util.LinkedList;
 
 /*
@@ -50,11 +51,12 @@ public class ListObjsData<T extends IAttributeDatum>
     }
 
 
-    public LinkedList<T> distinct(){
-        LinkedList<T> distinct = new LinkedList<>();
+    public LinkedList<Object> distinct(String onAttribute){
+        LinkedList<Object> distinct = new LinkedList<>();
         for (T obj: this.rows){
-            if (!distinct.contains(obj)){
-                distinct.add(obj);
+            Object val = obj.getValueOf(onAttribute);
+            if (!distinct.contains(val)){
+                distinct.add(val);
             }
         }
         return distinct;
@@ -72,11 +74,11 @@ public class ListObjsData<T extends IAttributeDatum>
                     (this.rows, this.attribute);
             result.addFirst(newList);
         } else{
-            for(T obj: distinct()) {
+            for(Object obj: this.distinct(onAttribute)) {
                 LinkedList<T> newList = new LinkedList<>();
                 for (T row: this.rows) {
                     if (obj.equals(row.getValueOf(onAttribute))) {
-                        newList.add(obj);
+                        newList.add(row);
                     }
                 }
                 ListObjsData<T> finalList = new ListObjsData<T>(newList, attList);

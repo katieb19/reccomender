@@ -33,38 +33,45 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     // build a decision tree to predict the named attribute
     @Override
     public INode buildClassifier(String targetAttr) {
+
+        //Setup
+        IAttributeDataset<T> dataSet = this.data;
+        LinkedList<String> attributes = dataSet.getAttributes();
+        attributes.remove(targetAttr);
+
+        Random num = new Random();
+        String holdingAttribute = attributes.get(num.nextInt(attributes.size()));
+
+        LinkedList<Edge> edgeList = new LinkedList<>();
+
+        INode finalNode = new Node(holdingAttribute, edgeList);
+
+        // Empty data
         if (this.data == null){
-            return this.root;
+            FinalDecision finalDecision = new FinalDecision(this.data.mostCommonValue(holdingAttribute));
+            return finalDecision;
         }
-        //Cases
-        // empty Attribute List - out of attributes
-        else if (this.data.getAttributes().size() == 1){
+
+        //One Attribute left
+        if (this.data.size() == 1) {
             IAttributeDataset<T> row = this.data;
             Object value = row.mostCommonValue(this.data.getAttributes().get(0));
-            INode finalNode = new FinalDecision(value);
+            finalNode = new FinalDecision(value);
+            this.root = finalNode;
             return finalNode;
+        }
 
-            //all options have same value for target attribute
+        //All elements same value for attribute
+        else if (this.data.allSameValue(targetAttr)){
+            FinalDecision finalDecision = new FinalDecision(this.data.getSharedValue(targetAttr));
+            Edge newEdge = new Edge(targetAttr, this.data.getSharedValue(holdingAttribute), finalDecision);
+            edgeList.add(newEdge);
+            this.root = finalNode;
+            return finalNode;
+        }
 
          // Not an edge case
-        } else{
-            //Setup
-            IAttributeDataset<T> dataSet = this.data;
-            LinkedList<String> attributes = dataSet.getAttributes();
-            attributes.remove(targetAttr); //doesn't work bc we don't have listObjsData
-            Random num = new Random();
-            String holdingAttribute = attributes.get(num.nextInt(attributes.size()));
-            LinkedList<Edge> edgeList = new LinkedList<>();
-
-            INode finalNode = new Node(holdingAttribute, edgeList);
-
-            if (this.data.allSameValue(targetAttr)){
-
-                FinalDecision finalDecision = new FinalDecision(this.data.getSharedValue(targetAttr));
-                Edge newEdge = new Edge(targetAttr, this.data.getSharedValue(holdingAttribute), finalDecision);
-                edgeList.add(newEdge);
-                return finalNode;
-            }
+        else{
 
             //Partition data based on attribute looking at
             LinkedList<IAttributeDataset<T>> partitionedData =
@@ -76,8 +83,9 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
                 Edge edge1 = new Edge(holdingAttribute, inner.getSharedValue(holdingAttribute),
                         this.buildClassifier(holdingAttribute));
                 edgeList.add(edge1);
+                this.root = finalNode;
+
             }
-            this.root = finalNode;
             return finalNode;
         }
     }
