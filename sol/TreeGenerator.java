@@ -35,7 +35,7 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     public INode buildClassifier(String targetAttr) {
 
         // Empty data
-        if (this.data == null){
+        if (this.data.size() == 0){
             FinalDecision finalDecision = new FinalDecision(this.data.mostCommonValue(targetAttr));
             return finalDecision;
         }
@@ -52,17 +52,9 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
         INode finalNode = new Node(holdingAttribute, edgeList);
 
-        //One Attribute left
-        if (this.data.size() == 1) {
-            IAttributeDataset<T> row = this.data;
-            Object value = row.mostCommonValue(this.data.getAttributes().get(0));
-            finalNode = new FinalDecision(value);
-            this.root = finalNode;
-            return finalNode;
-        }
 
         //All elements same value for attribute
-        else if (this.data.allSameValue(targetAttr)){
+        if (this.data.allSameValue(targetAttr)){
             FinalDecision finalDecision = new FinalDecision(this.data.getSharedValue(targetAttr));
             Edge newEdge = new Edge(targetAttr, this.data.getSharedValue(holdingAttribute), finalDecision);
             edgeList.add(newEdge);
@@ -79,10 +71,12 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
             //Create Edges
             for (IAttributeDataset<T> inner: partitionedData){
-                this.data = inner;
+                IAttributeDataset<T> recurData = this.data;
+                recurData = inner;
                 Edge edge1 = new Edge(holdingAttribute, inner.getSharedValue(holdingAttribute),
                         this.buildClassifier(holdingAttribute));
                 edgeList.add(edge1);
+                INode copyRoot = this.root;
                 this.root = finalNode;
 
             }
