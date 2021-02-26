@@ -31,7 +31,7 @@ public class ListObjsDataTest {
         vegetables.add(v2);
         vegetables.add(v3);
         ListObjsData<Vegetable> vegList = new ListObjsData<Vegetable>(
-                vegetables, attribute);
+                attribute, vegetables);
         return vegList;
     }
 
@@ -52,7 +52,7 @@ public class ListObjsDataTest {
         LinkedList<Vegetable> vegetables = new LinkedList<>();
         vegetables.add(v1);
         ListObjsData<Vegetable> vegList = new ListObjsData<Vegetable>(
-                vegetables, attribute);
+                attribute, vegetables);
         return vegList;
     }
 
@@ -66,7 +66,7 @@ public class ListObjsDataTest {
         LinkedList<String> attribute = new LinkedList<>();
         LinkedList<Vegetable> vegetables = new LinkedList<>();
         ListObjsData<Vegetable> vegList = new ListObjsData<Vegetable>(
-                vegetables, attribute);
+                attribute, vegetables);
         return vegList;
 
     }
@@ -95,7 +95,7 @@ public class ListObjsDataTest {
                 true, false);
         vegetables.add(v1);
         ListObjsData<Vegetable> vegList = new ListObjsData<Vegetable>(
-                vegetables, attribute2);
+                attribute2, vegetables);
 
         t.checkExpect(vegList.getAttributes(), attribute2);
 
@@ -181,8 +181,8 @@ public class ListObjsDataTest {
 
         //Green
         LinkedList<Vegetable> vegetables = new LinkedList<>();
-        ListObjsData<Vegetable> green = new ListObjsData<>(
-                vegetables, attribute);
+        ListObjsData<Vegetable> green = new ListObjsData<Vegetable>(
+                attribute, vegetables);
         Vegetable v1 = new Vegetable("spinach", "green",
                 true, false);
         Vegetable v2 = new Vegetable("pea", "green", false,
@@ -193,14 +193,15 @@ public class ListObjsDataTest {
 
         //Red
         LinkedList<Vegetable> vegetables2 = new LinkedList<>();
-        ListObjsData<Vegetable> red = new ListObjsData<>(vegetables2, attribute);
+        ListObjsData<Vegetable> red = new ListObjsData<Vegetable>(attribute,
+                vegetables2);
         red.rows.add(v5);
         red.rows.add(v6);
 
         //Orange
         LinkedList<Vegetable> vegetables3 = new LinkedList<>();
         ListObjsData<Vegetable> orange = new ListObjsData<Vegetable>(
-                vegetables3, attribute);
+                attribute, vegetables3);
         Vegetable v3 = new Vegetable("carrot", "orange",
                 true, false);
         orange.rows.add(v3);
@@ -224,7 +225,7 @@ public class ListObjsDataTest {
 
         LinkedList<Vegetable> vegetables4 = new LinkedList<>();
         ListObjsData<Vegetable> oneGreen = new ListObjsData<Vegetable>(
-                vegetables4, attribute);
+                attribute, vegetables4);
         Vegetable greenV1 = new Vegetable("spinach", "green",
                 true, false);
         oneGreen.rows.add(greenV1);
@@ -236,7 +237,7 @@ public class ListObjsDataTest {
         LinkedList<Vegetable> emptyList = new LinkedList<>();
         LinkedList<String> attribute5 = new LinkedList<>();
         ListObjsData<Vegetable> newEmpty = new ListObjsData<Vegetable>(
-                emptyList, attribute5);
+                attribute5, emptyList);
         t.checkException(new IndexOutOfBoundsException("less than or = to 0"),
                 newEmpty, "partition", "color");
     }

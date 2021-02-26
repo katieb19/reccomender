@@ -25,7 +25,7 @@ public class ListObjsData<T extends IAttributeDatum>
     public LinkedList<T> rows; // list of rows
     public LinkedList<String> attribute;
 
-    public ListObjsData(LinkedList<T> rows, LinkedList<String> attribute){
+    public ListObjsData(LinkedList<String> attribute, LinkedList<T> rows){
         this.rows = rows;
         this.attribute = attribute;
     }
@@ -75,7 +75,7 @@ public class ListObjsData<T extends IAttributeDatum>
         }
         else if (this.allSameValue(onAttribute)){
             ListObjsData<T> newList = new ListObjsData<T>
-                    (this.rows, this.attribute);
+                    (this.attribute, this.rows);
             result.addFirst(newList);
         } else{
             for(Object obj: this.distinct(onAttribute)) {
@@ -85,7 +85,7 @@ public class ListObjsData<T extends IAttributeDatum>
                         newList.add(row);
                     }
                 }
-                ListObjsData<T> finalList = new ListObjsData<T>(newList, attList);
+                ListObjsData<T> finalList = new ListObjsData<T>(attList, newList);
                 result.add(finalList);
             }
         }
@@ -94,11 +94,7 @@ public class ListObjsData<T extends IAttributeDatum>
 
     @Override
     public Object getSharedValue(String ofAttribute) {
-        if (this.allSameValue(ofAttribute)){
             return this.rows.get(0).getValueOf(ofAttribute);
-        }
-        //throw new IndexOutOfBoundsException("no shared value");
-        return null;
     }
 
 

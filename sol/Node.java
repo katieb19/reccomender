@@ -21,8 +21,8 @@ public class Node implements INode {
             LinkedList<String> str = new LinkedList<>();
             str.add(this.attribute);
             ListObjsData<IAttributeDatum> list = new
-                    ListObjsData<IAttributeDatum>(row,
-                    str);
+                    ListObjsData<IAttributeDatum>(
+                    str, row);
             for (Edge edge: this.edges){
                    if (edge.value.equals(attrVals.getValueOf(this.attribute))){
                        return edge.decision.lookupDecision(attrVals);
