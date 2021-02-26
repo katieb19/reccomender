@@ -42,6 +42,7 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         // Empty data
         if (attributes.size() == 0){
             FinalDecision finalDecision = new FinalDecision(this.data.mostCommonValue(targetAttr));
+            this.root = finalDecision;
             return finalDecision;
         }
 
@@ -78,10 +79,9 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
                         inner.getSharedValue(holdingAttribute),
                         this.buildClassifier(holdingAttribute));
                 edgeList.add(edge1);
-                INode copyRoot = this.root;
-                this.root = finalNode;
 
             }
+            this.root = finalNode;
             return finalNode;
         }
     }
