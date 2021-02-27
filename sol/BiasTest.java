@@ -37,7 +37,7 @@ public class BiasTest {
         /**
          * TODO: change this filepath
          */
-        String filepath = "data/train_candidates_unequal.csv";
+        String filepath = "data/train_candidates_equal.csv";
 
         RecommenderCSVParser<Candidate> parser = new RecommenderCSVParser<Candidate>();
 

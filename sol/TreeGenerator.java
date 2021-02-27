@@ -62,10 +62,10 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         //All elements same value for attribute
         if (this.data.allSameValue(targetAttr)){
             FinalDecision finalDecision = new FinalDecision(this.data.getSharedValue(targetAttr));
-            Edge newEdge = new Edge(targetAttr, this.data.getSharedValue(holdingAttribute), finalDecision);
-            edgeList.add(newEdge);
-            this.root = finalNode;
-            return finalNode;
+//            Edge newEdge = new Edge(targetAttr, this.data.getSharedValue(holdingAttribute), finalDecision);
+//            edgeList.add(newEdge);
+            this.root = finalDecision;
+            return finalDecision;
         }
 
          // Not an edge case
@@ -79,9 +79,10 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
             for (IAttributeDataset<T> inner: partitionedData){
                 //IAttributeDataset<T> recurData = this.data;
                 //recurData = inner;
+                this.data = inner;
                 Edge edge1 = new Edge(holdingAttribute,
                         inner.getSharedValue(holdingAttribute),
-                        this.buildClassifier(holdingAttribute));
+                        this.buildClassifier(targetAttr));
                 edgeList.add(edge1);
 
             }

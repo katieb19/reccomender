@@ -5,16 +5,24 @@ import src.INode;
 
 import java.util.LinkedList;
 
+/**
+ * A class that represents a Node and implements INode interface
+ */
 public class Node implements INode {
         String attribute;
         LinkedList<Edge> edges;
 
-        public Node(String at, LinkedList<Edge> edg){
+    /**
+     * A constructor for the Node class
+     * @param at - represents the attribute that the node is evaluating
+     * @param edg - represents the sub-trees based on the attribute,
+     *            which is a list of edges
+     */
+    public Node(String at, LinkedList<Edge> edg){
                 this.attribute = at;
                 this.edges = edg;
         }
 
-        // traverse tree based on attribute values to retrieve decision
         public Object lookupDecision(IAttributeDatum attrVals){
             LinkedList<IAttributeDatum> row = new LinkedList<>();
             row.add(attrVals);
@@ -30,9 +38,7 @@ public class Node implements INode {
                }
             return list.mostCommonValue(this.attribute);
         }
-        //currently just returning color for example but we want it to return the whole thing so we need to go through the tree
 
-        // print tree
         public void printNode(String leadspace){
                 String newline = System.lineSeparator();
                 System.out.print("attribute " + this.attribute + newline);

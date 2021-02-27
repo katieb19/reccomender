@@ -39,6 +39,36 @@ public class ListObjsDataTest {
         return vegList;
     }
 
+
+    /**
+            * Setup testing list with multiple vegetables
+     *
+             * @return a ListObjsData of vegetables
+     *
+             */
+    public ListObjsData<Vegetable> setupnotSameVeg(){
+        LinkedList<String> attribute = new LinkedList<>();
+        attribute.add("name");
+        attribute.add("color");
+        attribute.add("lowCarb");
+        attribute.add("likesToEat");
+        Vegetable v1 = new Vegetable("spinach", "green",
+                true, false);
+        Vegetable v2 = new Vegetable("pea", "green", false,
+                false);
+        Vegetable v3 = new Vegetable("carrot", "orange",
+                true, true);
+        Vegetable v4 = new Vegetable("apple", "green", true, true);
+        LinkedList<Vegetable> vegetables = new LinkedList<>();
+        vegetables.add(v1);
+        vegetables.add(v2);
+        vegetables.add(v3);
+        vegetables.add(v4);
+        ListObjsData<Vegetable> vegList = new ListObjsData<Vegetable>(
+                attribute, vegetables);
+        return vegList;
+    }
+
     /**
      * Setup testing list with one vegetables
      *
@@ -115,9 +145,12 @@ public class ListObjsDataTest {
     public void testAllSameValue(Tester t){
         ListObjsData<Vegetable> veg = setupVeg();
         ListObjsData<Vegetable> oneVeg = setuponeVeg();
-        t.checkExpect(veg.allSameValue("likesToEat"), true);
-        t.checkExpect(veg.allSameValue("color"), false);
-        t.checkExpect(oneVeg.allSameValue("color"), true);
+        t.checkExpect(veg.allSameValue("likesToEat"),
+                true);
+        t.checkExpect(veg.allSameValue("color"),
+                false);
+        t.checkExpect(oneVeg.allSameValue("color"),
+                true);
     }
 
     /**
@@ -126,8 +159,9 @@ public class ListObjsDataTest {
      */
     public void testSize(Tester t){
         ListObjsData<Vegetable> veg = setupVeg();
-        Vegetable v1 = new Vegetable("spinach", "green",
-                true, false);
+        Vegetable v1 = new Vegetable("spinach",
+                "green", true,
+                false);
         ListObjsData<Vegetable> oneVeg = setuponeVeg();
         t.checkExpect(veg.size(), 3);
         t.checkExpect(oneVeg.size(), 1);
@@ -137,8 +171,8 @@ public class ListObjsDataTest {
 
 
     /**
-     * A tester
-     * @param t
+     * A tester method to test the distinct method
+     * @param t - Tester
      */
     public void testDistinct(Tester t){
         ListObjsData<Vegetable> veg = setupVeg();
@@ -158,26 +192,34 @@ public class ListObjsDataTest {
 
         //Empty element
         LinkedList<Vegetable> emptyList = new LinkedList<>();
-        t.checkExpect(empty.distinct("color").size(), 0);
+        t.checkExpect(empty.distinct("color").size(),
+                0);
         t.checkExpect(empty.distinct("color").equals(emptyList));
     }
 
+    /**
+     * A tester method to test the partition method
+     * @param t - Tester
+     */
     public void testPartition(Tester t){
         //Multiple elements
         ListObjsData<Vegetable> veg = setupVeg();
 
-        Vegetable v4 = new Vegetable("lettuce", "green",
-                true, true);
-        Vegetable v5 = new Vegetable("beets", "red",
-                true, true);
-        Vegetable v6 = new Vegetable("tomato", "red",
-                true, true);
+        Vegetable v4 = new Vegetable("lettuce",
+                "green", true,
+                true);
+        Vegetable v5 = new Vegetable("beets",
+                "red", true,
+                true);
+        Vegetable v6 = new Vegetable("tomato",
+                "red", true, true);
 
         veg.rows.add(v4);
         veg.rows.add(v5);
         veg.rows.add(v6);
 
-        LinkedList<IAttributeDataset<Vegetable>> partitionedData = veg.partition("color");
+        LinkedList<IAttributeDataset<Vegetable>> partitionedData =
+                veg.partition("color");
         LinkedList<String> attribute = new LinkedList<>();
         attribute.add("name");
         attribute.add("lowCarb");
@@ -187,9 +229,10 @@ public class ListObjsDataTest {
         LinkedList<Vegetable> vegetables = new LinkedList<>();
         ListObjsData<Vegetable> green = new ListObjsData<Vegetable>(
                 attribute, vegetables);
-        Vegetable v1 = new Vegetable("spinach", "green",
-                true, false);
-        Vegetable v2 = new Vegetable("pea", "green", false,
+        Vegetable v1 = new Vegetable("spinach",
+                "green", true, false);
+        Vegetable v2 = new Vegetable("pea", "green",
+                false,
                 false);
         green.rows.add(v1);
         green.rows.add(v2);
@@ -246,6 +289,10 @@ public class ListObjsDataTest {
                 newEmpty, "partition", "color");
     }
 
+    /**
+     * A method to test the get shared value method
+     * @param t - Tester
+     */
     public void testGetSharedValue(Tester t){
         //Multiple elements - shared value
         ListObjsData<Vegetable> oneVeg = setuponeVeg();
@@ -262,12 +309,16 @@ public class ListObjsDataTest {
         t.checkExpect(oneVeg.getSharedValue("lowCarb"), true);
 
 
-        //Single Element
+        //Single Elementc
         ListObjsData<Vegetable> singleVeg = setuponeVeg();
         t.checkExpect(singleVeg.getSharedValue("color"), "green");
 
     }
 
+    /**
+     * A method to test the most common value method
+     * @param t - Tester
+     */
     public void testMostCommonValue(Tester t){
         //Multiple elements
         ListObjsData<Vegetable> veg = setupVeg();
@@ -294,21 +345,12 @@ public class ListObjsDataTest {
         t.checkExpect(veg.mostCommonValue("color"), "green");
     }
 
-    public void testPrintTree(Tester t){
-        ListObjsData<Vegetable> veg = setupVeg();
-        TreeGenerator<Vegetable> tree = new TreeGenerator<Vegetable>(veg);
-        tree.buildClassifier("likesToEat");
-        tree.printTree();
-        tree.buildClassifier("color");
-        tree.printTree();
-    }
+    public void testTree(Tester t){
+        ListObjsData<Vegetable> veg = setupnotSameVeg();
+        TreeGenerator<Vegetable> tree = new TreeGenerator<>(veg);
 
-//    public void testTree(Tester t){
-//        ListObjsData<Vegetable> veg = setupVeg();
-//        TreeGenerator<Vegetable> tree = new TreeGenerator<Vegetable>(veg);
-//        t.checkException(new RuntimeException("attribute not present in list"),
-//                tree, "buildClassifier", "sugar");
-//    }
+        tree.buildClassifier("lowCarb");
+    }
 
 
     public static void main(String[] args) {
