@@ -290,7 +290,7 @@ public class ListObjsDataTest {
         t.checkExpect(veg.mostCommonValue("color"), "green");
     }
 
-    public void testPrintNode(Tester t){
+    public void testPrintTree(Tester t){
         ListObjsData<Vegetable> veg = setupVeg();
         TreeGenerator<Vegetable> tree = new TreeGenerator<Vegetable>(veg);
         tree.buildClassifier("likesToEat");
@@ -298,6 +298,13 @@ public class ListObjsDataTest {
         tree.buildClassifier("color");
         tree.printTree();
     }
+
+//    public void testTree(Tester t){
+//        ListObjsData<Vegetable> veg = setupVeg();
+//        TreeGenerator<Vegetable> tree = new TreeGenerator<Vegetable>(veg);
+//        t.checkException(new RuntimeException("attribute not present in list"),
+//                tree, "buildClassifier", "sugar");
+//    }
 
 
     public static void main(String[] args) {

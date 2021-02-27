@@ -39,6 +39,10 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         LinkedList<String> attributes = dataSet.getAttributes();
         attributes.remove(targetAttr);
 
+//        if (!attributes.contains(targetAttr)){
+//            throw new RuntimeException("attribute not present in list");
+//        }
+
         // Empty data
         if (attributes.size() == 0){
             FinalDecision finalDecision = new FinalDecision(this.data.mostCommonValue(targetAttr));
