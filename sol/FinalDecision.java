@@ -18,19 +18,12 @@ public class FinalDecision implements INode {
         this.decision = decision;
     }
 
-    /**
-     * A method that looks up the value of the final decision
-     * @param attrVals - IAttributeDatum
-     * @return the object that represents the final decision
-     */
+    @Override
     public Object lookupDecision(IAttributeDatum attrVals){
         return this.decision;
     }
 
-    /**
-     * A method that prints a Node
-     * @param leadspace - String containing tabbing
-     */
+    @Override
     public void printNode(String leadspace){
         System.out.print("final decision     " + leadspace + this.decision );
     }

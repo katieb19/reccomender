@@ -23,6 +23,7 @@ public class Node implements INode {
                 this.edges = edg;
         }
 
+        @Override
         public Object lookupDecision(IAttributeDatum attrVals){
             LinkedList<IAttributeDatum> row = new LinkedList<>();
             row.add(attrVals);
@@ -39,6 +40,7 @@ public class Node implements INode {
             return list.mostCommonValue(this.attribute);
         }
 
+        @Override
         public void printNode(String leadspace){
                 String newline = System.lineSeparator();
                 System.out.print("attribute " + this.attribute + newline);

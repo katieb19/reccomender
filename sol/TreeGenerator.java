@@ -45,14 +45,16 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
         // Empty data
         if (attributes.size() == 0){
-            FinalDecision finalDecision = new FinalDecision(this.data.mostCommonValue(targetAttr));
+            FinalDecision finalDecision = new
+                    FinalDecision(this.data.mostCommonValue(targetAttr));
             this.root = finalDecision;
             return finalDecision;
         }
 
 
         Random num = new Random();
-        String holdingAttribute = attributes.get(num.nextInt(attributes.size()));
+        String holdingAttribute =
+                attributes.get(num.nextInt(attributes.size()));
 
         LinkedList<Edge> edgeList = new LinkedList<>();
 
@@ -61,9 +63,8 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
         //All elements same value for attribute
         if (this.data.allSameValue(targetAttr)){
-            FinalDecision finalDecision = new FinalDecision(this.data.getSharedValue(targetAttr));
-//            Edge newEdge = new Edge(targetAttr, this.data.getSharedValue(holdingAttribute), finalDecision);
-//            edgeList.add(newEdge);
+            FinalDecision finalDecision =
+                    new FinalDecision(this.data.getSharedValue(targetAttr));
             this.root = finalDecision;
             return finalDecision;
         }

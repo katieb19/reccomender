@@ -20,7 +20,6 @@ public class ListObjsDataTest {
      */
     public ListObjsData<Vegetable> setupVeg(){
         LinkedList<String> attribute = new LinkedList<>();
-        attribute.add("name");
         attribute.add("color");
         attribute.add("lowCarb");
         attribute.add("likesToEat");
@@ -48,7 +47,6 @@ public class ListObjsDataTest {
              */
     public ListObjsData<Vegetable> setupnotSameVeg(){
         LinkedList<String> attribute = new LinkedList<>();
-        attribute.add("name");
         attribute.add("color");
         attribute.add("lowCarb");
         attribute.add("likesToEat");
@@ -58,7 +56,8 @@ public class ListObjsDataTest {
                 false);
         Vegetable v3 = new Vegetable("carrot", "orange",
                 true, true);
-        Vegetable v4 = new Vegetable("apple", "green", true, true);
+        Vegetable v4 = new Vegetable("apple", "green", true,
+                true);
         LinkedList<Vegetable> vegetables = new LinkedList<>();
         vegetables.add(v1);
         vegetables.add(v2);
@@ -77,7 +76,6 @@ public class ListObjsDataTest {
 
     public ListObjsData<Vegetable> setuponeVeg(){
         LinkedList<String> attribute = new LinkedList<>();
-        attribute.add("name");
         attribute.add("color");
         attribute.add("lowCarb");
         attribute.add("likesToEat");
@@ -114,7 +112,6 @@ public class ListObjsDataTest {
 
         //Multiple attributes
         LinkedList<String> attribute = new LinkedList<>();
-        attribute.add("name");
         attribute.add("color");
         attribute.add("lowCarb");
         attribute.add("likesToEat");
@@ -221,7 +218,6 @@ public class ListObjsDataTest {
         LinkedList<IAttributeDataset<Vegetable>> partitionedData =
                 veg.partition("color");
         LinkedList<String> attribute = new LinkedList<>();
-        attribute.add("name");
         attribute.add("lowCarb");
         attribute.add("likesToEat");
 
@@ -311,7 +307,8 @@ public class ListObjsDataTest {
 
         //Single Elementc
         ListObjsData<Vegetable> singleVeg = setuponeVeg();
-        t.checkExpect(singleVeg.getSharedValue("color"), "green");
+        t.checkExpect(singleVeg.getSharedValue("color"),
+                "green");
 
     }
 
@@ -345,12 +342,6 @@ public class ListObjsDataTest {
         t.checkExpect(veg.mostCommonValue("color"), "green");
     }
 
-    public void testTree(Tester t){
-        ListObjsData<Vegetable> veg = setupnotSameVeg();
-        TreeGenerator<Vegetable> tree = new TreeGenerator<>(veg);
-
-        tree.buildClassifier("lowCarb");
-    }
 
 
     public static void main(String[] args) {
