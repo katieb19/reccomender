@@ -290,6 +290,15 @@ public class ListObjsDataTest {
         t.checkExpect(veg.mostCommonValue("color"), "green");
     }
 
+    public void testPrintNode(Tester t){
+        ListObjsData<Vegetable> veg = setupVeg();
+        TreeGenerator<Vegetable> tree = new TreeGenerator<Vegetable>(veg);
+        tree.buildClassifier("likesToEat");
+        tree.printTree();
+        tree.buildClassifier("color");
+        tree.printTree();
+    }
+
 
     public static void main(String[] args) {
         Tester.run(new ListObjsDataTest());

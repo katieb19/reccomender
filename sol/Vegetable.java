@@ -21,6 +21,8 @@ public class Vegetable implements IAttributeDatum {
 
     public Object getValueOf(String attributeName) {
         switch (attributeName) {
+            case "name":
+                return this.name;
             case "color":
                 return this.color;
             case "lowCarb":
