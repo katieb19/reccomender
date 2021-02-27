@@ -7,17 +7,10 @@ import javax.print.attribute.standard.JobKOctets;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 
-/*
-for tree generator, need private fields one to represent the tree (Inode class)
-because we don't want tree to be altered outside of the class
-make dataset private
-
-how to create edges (partition) and then figuring out the next nodes
- */
-/*
- * Class for a specific representation of rows in a data table. This uses a list
- * of objects (one object per row).
- * The type T is the object that forms the "rows" of the data table
+/**
+ * A class that implements ListObjsData
+ * @param <T> - represents an IAttributeDatum which reflects the objects
+ *           within the rows field
  */
 public class ListObjsData<T extends IAttributeDatum>
         implements IAttributeDataset<T> {
@@ -25,6 +18,11 @@ public class ListObjsData<T extends IAttributeDatum>
     public LinkedList<T> rows; // list of rows
     public LinkedList<String> attribute;
 
+    /**
+     * A constructor for ListObjsData
+     * @param attribute - a list of the attributes in an IAttributeDatum
+     * @param rows - represents a list of IAttributeDatum
+     */
     public ListObjsData(LinkedList<String> attribute, LinkedList<T> rows){
         this.rows = rows;
         this.attribute = attribute;
@@ -52,6 +50,11 @@ public class ListObjsData<T extends IAttributeDatum>
     }
 
 
+    /**
+     * A method that returns a distinct list of the values of an attribute
+     * @param onAttribute - the attribute that we are looking for values of
+     * @return a list of the distinct values of an attribute
+     */
     public LinkedList<Object> distinct(String onAttribute){
         LinkedList<Object> distinct = new LinkedList<>();
         for (T obj: this.rows){
@@ -85,7 +88,8 @@ public class ListObjsData<T extends IAttributeDatum>
                         newList.add(row);
                     }
                 }
-                ListObjsData<T> finalList = new ListObjsData<T>(attList, newList);
+                ListObjsData<T> finalList = new ListObjsData<T>(attList,
+                        newList);
                 result.add(finalList);
             }
         }
