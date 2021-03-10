@@ -39,11 +39,12 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         LinkedList<String> attributes = dataSet.getAttributes();
         attributes.remove(targetAttr);
 
-//        if (!attributes.contains(targetAttr)){
-//            throw new RuntimeException("attribute not present in list");
-//        }
-
         // Empty data
+        if (this.data.size() == 0){
+            throw new RuntimeException("data doesn't exist");
+        }
+
+        // Empty attribute list
         if (attributes.size() == 0){
             FinalDecision finalDecision = new
                     FinalDecision(this.data.mostCommonValue(targetAttr));
@@ -58,7 +59,8 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
         LinkedList<Edge> edgeList = new LinkedList<>();
 
-        INode finalNode = new Node(holdingAttribute, edgeList);
+        INode finalNode = new Node(holdingAttribute, edgeList,
+                this.data.mostCommonValue(targetAttr));
 
 
         //All elements same value for attribute
@@ -78,8 +80,6 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
             //Create Edges
             for (IAttributeDataset<T> inner: partitionedData){
-                //IAttributeDataset<T> recurData = this.data;
-                //recurData = inner;
                 this.data = inner;
                 Edge edge1 = new Edge(holdingAttribute,
                         inner.getSharedValue(holdingAttribute),

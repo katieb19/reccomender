@@ -346,23 +346,23 @@ public class ListObjsDataTest {
      * A tester method to test lookupdecision method
      * @param t - Tester
      */
-    public void testLookUpDecision(Tester t) {
-        LinkedList<Edge> edgelist = new LinkedList<>();
-        Edge edge1 = new Edge("color", "green",
-                new FinalDecision(true));
-        edgelist.add(edge1);
-        Node node1 = new Node("color", edgelist);
-        Vegetable v1 = new Vegetable("spinach", "green",
-                true, false);
-        Vegetable v3 = new Vegetable("carrot", "orange",
-                true, false);
-        Vegetable v2 = new Vegetable("pea", "green", false,
-                false);
-
-        t.checkExpect(node1.lookupDecision(v1), true);
-        t.checkExpect(node1.lookupDecision(v3), "orange");
-        t.checkExpect(node1.lookupDecision(v2), true);
-    }
+//    public void testLookUpDecision(Tester t) {
+//        LinkedList<Edge> edgelist = new LinkedList<>();
+//        Edge edge1 = new Edge("color", "green",
+//                new FinalDecision(true));
+//        edgelist.add(edge1);
+//        Node node1 = new Node("color", edgelist);
+//        Vegetable v1 = new Vegetable("spinach", "green",
+//                true, false);
+//        Vegetable v3 = new Vegetable("carrot", "orange",
+//                true, false);
+//        Vegetable v2 = new Vegetable("pea", "green", false,
+//                false);
+//
+//        t.checkExpect(node1.lookupDecision(v1), true);
+//        t.checkExpect(node1.lookupDecision(v3), "orange");
+//        t.checkExpect(node1.lookupDecision(v2), true);
+//    }
 
 
 

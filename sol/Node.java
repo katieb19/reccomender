@@ -11,6 +11,7 @@ import java.util.LinkedList;
 public class Node implements INode {
         String attribute;
         LinkedList<Edge> edges;
+        Object mostCommon;
 
     /**
      * A constructor for the Node class
@@ -18,9 +19,10 @@ public class Node implements INode {
      * @param edg - represents the sub-trees based on the attribute,
      *            which is a list of edges
      */
-    public Node(String at, LinkedList<Edge> edg){
+    public Node(String at, LinkedList<Edge> edg, Object most){
                 this.attribute = at;
                 this.edges = edg;
+                this.mostCommon = most;
         }
 
         @Override
@@ -37,7 +39,7 @@ public class Node implements INode {
                        return edge.decision.lookupDecision(attrVals);
                    }
                }
-            return list.mostCommonValue(this.attribute);
+            return this.mostCommon;
         }
 
         @Override

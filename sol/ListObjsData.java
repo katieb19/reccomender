@@ -70,7 +70,7 @@ public class ListObjsData<T extends IAttributeDatum>
     @Override
     public LinkedList<IAttributeDataset<T>> partition(String onAttribute) {
         LinkedList<IAttributeDataset<T>> result = new LinkedList<>();
-        LinkedList<String> attList = this.attribute;
+        LinkedList<String> attList = new LinkedList<>(this.attribute);
         attList.remove(onAttribute);
 
         if (this.rows.size() <= 0){
