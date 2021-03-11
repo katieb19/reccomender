@@ -80,10 +80,11 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
             //Create Edges
             for (IAttributeDataset<T> inner: partitionedData){
+                TreeGenerator<T> smallerTree = new TreeGenerator<>(inner);
                 this.data = inner;
                 Edge edge1 = new Edge(holdingAttribute,
                         inner.getSharedValue(holdingAttribute),
-                        this.buildClassifier(targetAttr));
+                        smallerTree.buildClassifier(targetAttr));
                 edgeList.add(edge1);
 
             }
